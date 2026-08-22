@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+    <html>
+        <head>
+            <meta charset="UTF-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+            <title>Aumnia Group Inc.</title>
+
+            <!-- Font Awesome Icons (v.6.4.0)-->
+             <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
+
+            <!-- Google Fonts Preconnect-->
+             <link rel="preconnect" href="https://fonts.googleapis.com">
+             <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+            <!-- Google Fonts from Figma prototype-->
+             <link href="https://fonts.googleapis.com/css2?family=Alex+Brush&family=Inder&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+
+            <!-- Local CSS stylesheet-->
+             <link rel="stylesheet" href="css/style.css">
+
+            <!-- Local JavaScript file-->
+             <script src="javascript/main.js"></script>
+        </head>
+
+        <body class="contact-page">
+            <!-- Header Section Starts-->
+             <div class="hero">
+                <nav>
+                    <div class="left-side">
+                        <a href="index.html">
+                            <img src="images/placeholder logo.png" alt="Aumnia Group Inc. Logo" class="logo" height="35" width="60">
+                        </a>
+                        <h1>Aumnia Group Inc.</h1>
+                    </div>
+
+                    <div class="right-side">
+                        <div class="nav-links" id="navLinks">
+                            <ul>
+                                <li><a href="index.html">Home</a></li>
+                                <li><a href="Properties.html">Properties</a></li>
+                                <li><a href="Invest.html">Invest</a></li>
+                                <li><a href="About.html">About</a></li>
+                                <li><a href="Contact.html" class="active">Contact</a></li>
+                            </ul>
+                        </div>
+                        <div class="social-icons">
+                            <a href="#" class="fab fa-facebook-f"></a>
+                            <a href="#" class="fas fa-envelope-open"></a>
+                        </div>
+                    </div>
+                </nav>
+
+                <div class="page-header">
+                    <h1 class="about-header">Contact Us</h1>
+                </div>
+             </div>
+
+             <div class="contact-block">
+                <h3>Location: 34 Downsville Avenue, Hayan | Email: info@business.org | Call Us: (555)555-5555</h3>
+             </div>
+            <!-- Header Section Ends-->
+
+            <!-- Personal Section Starts-->
+             <div class="vid-container"> <!-- Because it has similar css to the vid-section in the index.html-->
+                <img src="images/about profile.png" height="290" width="330">
+                <div class="info">
+                    <h1>Personal Contact Info</h1>
+                    <p><b>Phone Number: </b>(555)555-5555<br><b>Email Address: </b><a href="mailto:#">info@business.org</a><br>
+                        <b>Social Media Handles: </b><a href="#">This is a handle</a></p>
+                </div>
+             </div>
+            <!-- Personal Section Ends-->
+
+            <!-- Form Section Starts-->
+             <section class="form-section">
+                <p class="form-intro">
+                    Any questions or requests regarding general inquiries, investment opportunities, commercial rentals, or 
+                    Airbnb/Vacation rentals can be submitted using the form below.
+                </p>
+
+                <form class="contact-form" action="#" method="POST">
+                    <!-- Name Field -->
+                    <div class="form-group">
+                        <label for="name">Name: <span class="required">(*required*)</span></label>
+                        <input type="text" id="name" name="name" required>
+                    </div>
+
+                    <!-- Email Field -->
+                    <div class="form-group">
+                        <label for="email">Email Address: <span class="required">(*required*)</span></label>
+                        <input type="email" id="email" name="email" required>
+                    </div>
+
+                    <!-- Phone Field -->
+                    <div class="form-group">
+                        <label for="phone">Phone Number:</label>
+                        <input type="tel" id="phone" name="phone">
+                    </div>
+
+                    <!-- Select Inquiry Field -->
+                    <div class="form-group">
+                        <label for="inquiry">Select Inquiry/Request: <span class="required">(*required*)</span></label>
+                        <div class="select-wrapper">
+                            <select id="inquiry" name="inquiry" required>
+                                <option value="" disabled selected hidden>Select An Option</option>
+                                <option value="general">General Inquiries</option>
+                                <option value="investment">Investment Opportunities</option>
+                                <option value="commercial">Commercial Rentals</option>
+                                <option value="airbnb">Airbnb/Vacation Rentals</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <!-- Message Field -->
+                    <div class="form-group">
+                        <label for="message">Message: <span class="required">(*required*)</span></label>
+                        <textarea id="message" name="message" rows="6" required></textarea>
+                    </div>
+
+                    <!-- Submit Button -->
+                    <button type="submit" class="submit-btn">Submit Form</button>
+                </form>
+             </section>
+            <!-- Form Section Ends-->
+
+            <!-- Tour Schedule Section Starts-->
+             <section class="tour-section">
+                <div class="tour-container">
+                    <!-- Left Column: Map Placeholder -->
+                    <div class="tour-col">
+                        <h2>Come Visit Us</h2>
+                        <div class="map-wrapper">
+                            <img src="images/map.png" class="map-img" height="450" width="475">
+                        </div>
+                    </div>
+
+                    <!-- Right Column: Calendar Booking Widget -->
+                    <div class="schedule-col">
+                        <h2>Schedule a live property viewing</h2>
+                        
+                        <div class="calendar-widget">
+                            <!-- Calendar Header Controls -->
+                            <div class="calendar-header">
+                                <h3>Calendar</h3>
+                                <div class="calendar-nav">
+                                    <button id="prevMonth" aria-label="Previous Month">&lt;</button>
+                                    <span id="monthYearLabel">August 2026</span>
+                                    <button id="nextMonth" aria-label="Next Month">&gt;</button>
+                                </div>
+                            </div>
+                            
+                            <!-- Calendar Grid -->
+                            <div class="calendar-body">
+                                <div class="calendar-weekdays">
+                                    <span>Su</span><span>Mo</span><span>Tu</span><span>We</span><span>Th</span><span>Fr</span><span>Sa</span>
+                                </div>
+                                <div class="calendar-days-grid" id="daysGrid">
+                                    <!-- Dynamically generated by JS -->
+                                </div>
+                            </div>
+
+                            <!-- Pop-up Modal / Time Selector Bar -->
+                            <div class="time-popup" id="timePopup">
+                                <button type="button" class="close-popup-btn" id="closePopupBtn">&times;</button>
+                                <div class="time-popup-content">
+                                    <span class="selected-date-text" id="selectedDateText">Selected Date: Aug 3</span>
+                                    <div class="select-wrapper">
+                                        <select id="timeSlot" required>
+                                            <option value="" disabled selected hidden>Select Time</option>
+                                            <option value="09:00">09:00 AM</option>
+                                            <option value="11:00">11:00 AM</option>
+                                            <option value="13:30">01:30 PM</option>
+                                            <option value="15:00">03:00 PM</option>
+                                            <option value="16:30">04:30 PM</option>
+                                        </select>
+                                    </div>
+                                    <button type="button" class="confirm-time-btn" id="confirmTimeBtn">Confirm Slot</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+             </section>
+            <!-- Tour Schedule Section Ends-->
+
+            <hr class="break">
+
+            <!-- Notice Section Starts-->
+             <p class="notice">For more information on our business; visit our <a href="About.html"> About Us</a>, our 
+                <a href="Properties.html">Properties page</a>, and our <a href="Invest.html">Investment page</a></p>
+            <!-- Notice Section Ends-->
+            
+            <!-- Footer Section Starts-->
+             <footer class="site-footer">
+                <!-- Top Row: Logo, Branding, Contact & Questions -->
+                <div class="footer-top">
+                    
+                    <!-- Branding Block -->
+                    <div class="footer-brand">
+                        <img src="images/placeholder logo.png" alt="Aumnia Group Inc. Logo" class="footer-logo">
+                        <div class="brand-text">
+                            <h2 class="company-name">Aumnia Group Inc</h2>
+                            <p class="company-address">34 Downsville Avenue, Hayan</p>
+                        </div>
+                    </div>
+
+                    <!-- Contact Us Column -->
+                    <div class="footer-column">
+                        <h3 class="contact">Contact Us</h3>
+                        <p>(555)555-5555</p>
+                        <p><a href="mailto:info@business.org">info@business.org</a></p>
+                    </div>
+
+                    <!-- Questions Column -->
+                    <div class="footer-column">
+                        <h3>Questions?</h3>
+                        <p><a href="#" onclick="openFaqModal(event)">FAQs</a></p>
+                        <p><a href="https://www.google.com/maps/place/Dominica/data=!4m2!3m1!1s0x8c14d2faf2155a15:0x49b39109053afd3c?sa=X&ved=1t:242&ictx=111" target="_blank" rel="noopener noreferrer">View map</a></p>
+                    </div>
+
+                </div>
+
+                <!-- Bottom Row: Copyright/Legal Links & Social Icons -->
+                <div class="footer-bottom">
+                    <div class="footer-legal">
+                        <span>&copy; 2026 Aumnia Group Inc. All rights reserved</span>  | 
+                        <a href="#">Terms of Service</a> | 
+                        <a href="#">Privacy Policy</a>
+                    </div>
+                    <div class="footer-socials">
+                        <a href="#" class="fab fa-facebook-f" aria-label="Facebook"></a>
+                        <a href="#" class="fas fa-envelope" aria-label="Email"></a>
+                    </div>
+                </div>
+             </footer>
+            <!-- Footer Section Ends-->
+
+            <!-- Form Confirmation Modal -->
+             <div id="form-modal" class="modal-overlay">
+                <div class="modal-card">
+                    <button type="button" class="modal-close" onclick="closeFormModal()">&times;</button>
+                    <div class="modal-icon modal-icon-success">
+                        <i class="fa-solid fa-circle-check"></i>
+                    </div>
+                    <h2>Inquiry Received</h2>
+                    <p>Thank you for reaching out to Aumnia Group Inc. Our team has received your details and will follow up shortly.</p>
+                    <button type="button" class="btn-primary-modal" onclick="closeFormModal()">Done</button>
+                </div>
+             </div>
+
+            <!-- FAQ Modal -->
+             <div id="faq-modal" class="modal-overlay">
+                <div class="modal-card">
+                    <button type="button" class="modal-close" onclick="closeFaqModal()">&times;</button>
+                    <div class="modal-icon modal-icon-info">
+                        <i class="fa-solid fa-circle-question"></i>
+                    </div>
+                    <h2>Frequently Asked Questions</h2>
+                    <p>We are currently compiling our most frequently asked questions. If you have an immediate inquiry, please reach out to our team.</p>
+                    <div class="modal-actions">
+                        <a href="contact.html" class="btn-primary-modal">Go to Contact</a>
+                        <button type="button" class="btn-secondary-modal" onclick="closeFaqModal()">Close</button>
+                    </div>
+                </div>
+             </div>
+        </body>
+    </html>

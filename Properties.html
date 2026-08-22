@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+    <html>
+        <head>
+            <meta charset="UTF-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+            <title>Aumnia Group Inc.</title>
+
+            <!-- Font Awesome Icons (v.6.4.0)-->
+             <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
+
+            <!-- Google Fonts Preconnect-->
+             <link rel="preconnect" href="https://fonts.googleapis.com">
+             <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+            <!-- Google Fonts from Figma prototype-->
+             <link href="https://fonts.googleapis.com/css2?family=Alex+Brush&family=Inder&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+
+            <!-- Local CSS stylesheet-->
+             <link rel="stylesheet" href="css/style.css">
+
+            <!-- Local JavaScript file-->
+             <script src="javascript/main.js"></script>
+        </head>
+
+        <body class="properties-page">
+            <!-- Header Section Starts-->
+             <div class="hero">
+                <nav>
+                    <div class="left-side">
+                        <a href="index.html">
+                            <img src="images/placeholder logo.png" alt="Aumnia Group Inc. Logo" class="logo" height="35" width="60">
+                        </a>
+                        <h1>Aumnia Group Inc.</h1>
+                    </div>
+
+                    <div class="right-side">
+                        <div class="nav-links" id="navLinks">
+                            <ul>
+                                <li><a href="index.html">Home</a></li>
+                                <li><a href="Properties.html" class="active">Properties</a></li>
+                                <li><a href="Invest.html">Invest</a></li>
+                                <li><a href="About.html">About</a></li>
+                                <li><a href="Contact.html">Contact</a></li>
+                            </ul>
+                        </div>
+                        <div class="social-icons">
+                            <a href="#" class="fab fa-facebook-f"></a>
+                            <a href="#" class="fas fa-envelope-open"></a>
+                        </div>
+                    </div>
+                </nav>
+
+                <div class="page-header">
+                    <h1 class="about-header">View Our Properties</h1>
+                </div>
+             </div>
+
+             <div class="contact-block">
+                <h3>Location: 34 Downsville Avenue, Hayan | Email: info@business.org | Call Us: (555)555-5555</h3>
+             </div>
+            <!-- Header Section Ends-->
+
+            <!-- Properties Section Starts -->
+             <section class="properties-section">
+                <div class="properties-container">
+                    <!-- Left Column: Gallery Slideshow -->
+                    <div class="properties-gallery">
+                        <!-- Main Display View -->
+                        <div class="slide-container">
+                            <!-- Main Image Slide -->
+                            <img id="mainSlide" src="images/property.png" alt="Loving Hills Main View" height="400" width="600">
+
+                            <!-- Navigation Arrows -->
+                            <button type="button" class="slide-nav prev-btn" onclick="changeSlide(-1)">
+                                <i class="fa-solid fa-chevron-left"></i>
+                            </button>
+                            <button type="button" class="slide-nav next-btn" onclick="changeSlide(1)">
+                                <i class="fa-solid fa-chevron-right"></i>
+                            </button>
+
+                            <!-- Slide Counter Badge -->
+                            <div class="slide-counter" id="slideCounter">1/5</div>
+                        </div>
+
+                        <!-- Thumbnail Strip -->
+                        <div class="thumbnail-strip">
+                            <div class="thumb-item active" onclick="setSlide(0)">
+                                <img src="images/property.png" alt="Front Exterior">
+                            </div>
+                            <div class="thumb-item" onclick="setSlide(1)">
+                                <img src="images/living room.png" alt="Living Room">
+                            </div>
+                            <div class="thumb-item" onclick="setSlide(2)">
+                                <img src="images/pool.png" alt="Pool Area">
+                            </div>
+                            <div class="thumb-item" onclick="setSlide(3)">
+                                <img src="images/gallery vid.png" alt="Video Tour">
+                            </div>
+                            <div class="thumb-item" onclick="setSlide(4)">
+                                <img src="images/gallery 360.png" alt="360 Tour">
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Right Column: Details & Specs -->
+                    <div class="properties-content">
+                        <h2 class="property-title">Loving Hills</h2>
+                        <p class="property-address">12 Wilson St, Andsville</p>
+
+                        <p class="property-description">
+                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque mattis euismod justo in 
+                            efficitur. Proin ac purus lectus. Morbi accumsan, libero a suscipit iaculis, lorem. Morbi condimentum 
+                            lacus vitae libero auctor, consectetur mattis dolor scelerisqu.
+                        </p>
+
+                        <!-- Key Amenities List -->
+                        <ul class="property-features">
+                            <li>Private Pool</li>
+                            <li>Hi-Speed WiFi</li>
+                            <li>Gourmet Kitchen</li>
+                            <li>Dedicated Workspace</li>
+                        </ul>
+
+                        <!-- Specs & Pricing Row -->
+                        <div class="property-meta-row">
+                            <div class="property-specs">
+                                <span><i class="fa-solid fa-user"></i> 10</span>
+                                <span><i class="fa-solid fa-bed"></i> 2</span>
+                                <span><i class="fas fa-building"></i> 1000sqft</span>
+                                <span><i class="fas fa-bath"></i> 2</span>
+                            </div>
+                            <div class="property-price">
+                                <b>$200</b>/Night
+                            </div>
+                        </div>
+                    </div>
+                </div>
+             </section>
+            <!-- Properties Section Ends -->
+
+            <!-- Calculator Section Starts-->
+             <section class="calc-section">
+                <div class="calc-head">
+                    <h1>Estimated Cost & ROI Calculator</h1>
+
+                    <!-- Toggle Mode Links -->
+                    <div class="calc-tabs">
+                        <button type="button" class="tab-link active" id="tab-rent" onclick="switchCalcMode('rent')">I want to Rent/Stay</button>
+                        <span class="tab-separator">|</span>
+                        <button type="button" class="tab-link" id="tab-invest" onclick="switchCalcMode('invest')">I want to Invest</button>
+                    </div>
+                </div>
+
+                <div class="calc-container">                    
+                    <!-- Left Side: Calculator -->
+                    <div class="calc-form">
+                        
+                        <!-- Rent Calculator -->
+                        <form id="form-rent" class="calc-mode-form active">
+                            <!-- Property Type -->
+                            <div class="form-group">
+                                <label for="rent-property-type">Property Type:</label>
+                                <div class="calc-select-wrapper">
+                                    <select id="rent-property-type">
+                                        <option value="vacation-commercial">Vacation/Commercial</option>
+                                        <option value="residential">Residential</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <!-- Stay Duration -->
+                            <div class="form-group">
+                                <label>Stay Duration:</label>
+                                <div class="date-inputs">
+                                    <div class="input-with-icon">
+                                        <input type="text" placeholder="Start Date:" onfocus="(this.type='date')" onblur="(this.type='text')">
+                                    </div>
+                                    <div class="input-with-icon">
+                                        <input type="text" placeholder="End Date:" onfocus="(this.type='date')" onblur="(this.type='text')">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Occupancy -->
+                            <div class="form-group">
+                                <label for="rent-guests">Occupancy:</label>
+                                <div class="calc-select-wrapper">
+                                    <select id="rent-guests">
+                                        <option value="" disabled selected>Number of Guests:</option>
+                                        <option value="1">1 Guest</option>
+                                        <option value="2">2 Guests</option>
+                                        <option value="4">4 Guests</option>
+                                        <option value="10">10 Guests</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <!-- Add-ons -->
+                            <div class="form-group">
+                                <label class="label-with-note">Add-ons: <span>(Optional)</span></label>
+                                <div class="checkbox-grid">
+                                    <label class="checkbox-label">
+                                        <input type="checkbox" name="addon" value="feature1"> Feature/Amenity
+                                    </label>
+                                    <label class="checkbox-label">
+                                        <input type="checkbox" name="addon" value="feature2"> Feature/Amenity
+                                    </label>
+                                    <label class="checkbox-label">
+                                        <input type="checkbox" name="addon" value="feature3"> Feature/Amenity
+                                    </label>
+                                    <label class="checkbox-label">
+                                        <input type="checkbox" name="addon" value="feature4"> Feature/Amenity
+                                    </label>
+                                </div>
+                            </div>
+
+                            <button type="button" class="btn-calculate">Calculate Cost</button>
+                        </form>
+
+                        <!-- INVEST FORM MODE -->
+                        <form id="form-invest" class="calc-mode-form">
+                            <!-- Capital Investment Slider -->
+                            <div class="form-group">
+                                <label for="invest-capital">Initial Capital Investment:</label>
+                                <div class="range-wrapper">
+                                    <input type="range" id="invest-capital" min="0" max="100000" value="0" step="1000" oninput="updateCapitalValue(this.value)">
+                                    <span class="range-value" id="capital-display">$0</span>
+                                </div>
+                            </div>
+
+                            <!-- Investment Strategy -->
+                            <div class="form-group">
+                                <label for="invest-strategy">Investment Strategy:</label>
+                                <div class="calc-select-wrapper">
+                                    <select id="invest-strategy">
+                                        <option value="vacation-commercial">Vacation/Commercial</option>
+                                        <option value="residential">Residential</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <!-- Target Holding Period -->
+                            <div class="form-group">
+                                <label for="invest-target">Target Holding Period:</label>
+                                <div class="calc-select-wrapper">
+                                    <select id="invest-target">
+                                        <option value="" disabled selected>Period of Investment:</option>
+                                        <option value="1">1 Year</option>
+                                        <option value="3">3 Years</option>
+                                        <option value="5">5 Years</option>
+                                        <option value="10">10+ Years</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <button type="button" class="btn-calculate">Calculate ROI</button>
+                        </form>
+
+                    </div>
+
+                    <!-- Right Side: Total Output Display Card -->
+                     <div class="calc-receipt">
+                        <!-- Rent Total Heading (Visible by default) -->
+                        <h3 class="total-title" id="title-rent">Estimated Total = <span id="total-amount-rent">$274</span></h3>
+                        
+                        <!-- Invest Total Heading (Hidden by default) -->
+                        <h3 class="total-title" id="title-invest" style="display: none;">Estimated Total = <span id="total-amount-invest">$10,850</span></h3>
+                        
+                        <!-- Rent Breakdown (Active) -->
+                        <div id="breakdown-rent" class="breakdown-list active">
+                            <div class="breakdown-item"><span>Base Rate (1 night) =</span> <b>$200</b></div>
+                            <div class="breakdown-item"><span>Cleaning & Maintenance Fee =</span> <b>$45</b></div>
+                            <div class="breakdown-item"><span>Taxes & Fees =</span> <b>$29</b></div>
+                        </div>
+
+                        <!-- Invest Breakdown -->
+                        <div id="breakdown-invest" class="breakdown-list">
+                            <div class="breakdown-item"><span>Initial Capital =</span> <b>$10,000</b></div>
+                            <div class="breakdown-item"><span>Target Annual Yield (8.5%) =</span> <b>$850/yr</b></div>
+                            <div class="breakdown-item"><span>Holding Duration =</span> <b>1 Year</b></div>
+                            <div class="breakdown-item"><span>Estimated Net Profit =</span> <b>$850</b></div>
+                            
+                            <a href="#" class="btn-prospectus">Request Full Prospectus</a>
+                        </div>
+                     </div>
+
+                </div>
+
+                <p class="calc-disclaimer" id="invest-disclaimer">*Projections are estimated target yields, not guaranteed financial returns*</p>
+             </section>
+            <!-- Calculator Section Ends-->
+
+            <!-- Notice Section Starts-->
+             <p class="notice">Have any further questions and/or requests, want to get in contact, interested in investing; visit
+                 our, <a href="About.html">About Us</a>, <a href="Contact.html">Contact page</a>,<br> and <a href="Invest.html">
+                    Investment page</a> for more information.</p>
+            <!-- Notice Section Ends-->
+
+            <!-- Footer Section Starts-->
+             <footer class="site-footer">
+                <!-- Top Row: Logo, Branding, Contact & Questions -->
+                <div class="footer-top">
+                    
+                    <!-- Branding Block -->
+                    <div class="footer-brand">
+                        <img src="images/placeholder logo.png" alt="Aumnia Group Inc. Logo" class="footer-logo">
+                        <div class="brand-text">
+                            <h2 class="company-name">Aumnia Group Inc</h2>
+                            <p class="company-address">34 Downsville Avenue, Hayan</p>
+                        </div>
+                    </div>
+
+                    <!-- Contact Us Column -->
+                    <div class="footer-column">
+                        <h3 class="contact">Contact Us</h3>
+                        <p>(555)555-5555</p>
+                        <p><a href="mailto:info@business.org">info@business.org</a></p>
+                    </div>
+
+                    <!-- Questions Column -->
+                    <div class="footer-column">
+                        <h3>Questions?</h3>
+                        <p><a href="#" onclick="openFaqModal(event)">FAQs</a></p>
+                        <p><a href="https://www.google.com/maps/place/Dominica/data=!4m2!3m1!1s0x8c14d2faf2155a15:0x49b39109053afd3c?sa=X&ved=1t:242&ictx=111" target="_blank" rel="noopener noreferrer">View map</a></p>
+                    </div>
+
+                </div>
+
+                <!-- Bottom Row: Copyright/Legal Links & Social Icons -->
+                <div class="footer-bottom">
+                    <div class="footer-legal">
+                        <span>&copy; 2026 Aumnia Group Inc. All rights reserved</span>  | 
+                        <a href="#">Terms of Service</a> | 
+                        <a href="#">Privacy Policy</a>
+                    </div>
+                    <div class="footer-socials">
+                        <a href="#" class="fab fa-facebook-f" aria-label="Facebook"></a>
+                        <a href="#" class="fas fa-envelope" aria-label="Email"></a>
+                    </div>
+                </div>
+             </footer>
+            <!-- Footer Section Ends-->
+
+            <!-- FAQ Modal -->
+             <div id="faq-modal" class="modal-overlay">
+                <div class="modal-card">
+                    <button type="button" class="modal-close" onclick="closeFaqModal()">&times;</button>
+                    <div class="modal-icon modal-icon-info">
+                        <i class="fa-solid fa-circle-question"></i>
+                    </div>
+                    <h2>Frequently Asked Questions</h2>
+                    <p>We are currently compiling our most frequently asked questions. If you have an immediate inquiry, please reach out to our team.</p>
+                    <div class="modal-actions">
+                        <a href="contact.html" class="btn-primary-modal">Go to Contact</a>
+                        <button type="button" class="btn-secondary-modal" onclick="closeFaqModal()">Close</button>
+                    </div>
+                </div>
+             </div>
+        </body>
+    </html>
