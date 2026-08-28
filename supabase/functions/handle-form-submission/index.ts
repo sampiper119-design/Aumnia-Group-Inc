@@ -111,6 +111,21 @@ async function fetchPropertyTitle(propertyId: unknown): Promise<string | null> {
   }
 }
 
+// ADMIN_EMAIL may hold several comma-separated addresses, so every admin gets
+// notified. Resend expects an array of addresses, not one comma-joined string.
+function adminRecipients(): string[] {
+  const raw = Deno.env.get("ADMIN_EMAIL");
+  if (!raw) throw new Error("ADMIN_EMAIL is not set");
+
+  const addresses = raw
+    .split(",")
+    .map((a) => a.trim())
+    .filter((a) => a.length > 0);
+
+  if (addresses.length === 0) throw new Error("ADMIN_EMAIL is empty");
+  return addresses;
+}
+
 function escapeHtml(value: unknown): string {
   if (value === null || value === undefined) return "";
   return String(value)
@@ -120,9 +135,7 @@ function escapeHtml(value: unknown): string {
 }
 
 async function handleInquiry(record: Record<string, unknown>): Promise<void> {
-  const adminEmail = Deno.env.get("ADMIN_EMAIL");
-  if (!adminEmail) throw new Error("ADMIN_EMAIL is not set");
-
+  const recipients = adminRecipients();
   const fromAddress = Deno.env.get("RESEND_FROM_EMAIL") || DEFAULT_FROM;
   const propertyTitle = await fetchPropertyTitle(record.property_id);
 
@@ -138,25 +151,23 @@ async function handleInquiry(record: Record<string, unknown>): Promise<void> {
 
   await sendEmail({
     from: fromAddress,
-    to: [adminEmail],
+    to: recipients,
     subject: `New Inquiry from ${String(record.name ?? "a visitor")}`,
     html,
   });
 }
 
 async function handleTourBooking(record: Record<string, unknown>): Promise<void> {
-  const adminEmail = Deno.env.get("ADMIN_EMAIL");
-  if (!adminEmail) throw new Error("ADMIN_EMAIL is not set");
-
+  const recipients = adminRecipients();
   const fromAddress = Deno.env.get("RESEND_FROM_EMAIL") || DEFAULT_FROM;
   const propertyTitle = await fetchPropertyTitle(record.property_id);
   const dateLabel = escapeHtml(record.requested_date);
   const timeLabel = escapeHtml(record.requested_time);
 
-  // Notify Mrs. Piper.
+  // Notify the admins.
   await sendEmail({
     from: fromAddress,
-    to: [adminEmail],
+    to: recipients,
     subject: `New Tour Booking: ${dateLabel} ${timeLabel}`,
     html: `
       <h2>New Property Tour Booking</h2>
