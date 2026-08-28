@@ -116,9 +116,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
 // Properties Gallery Slideshow Logic
 const slides = [
-    'images/property.png',
-    'images/living room.png',
-    'images/pool.png',
+    'images/8.jpg',
+    'images/3.jpg',
+    'images/1.jpg',
+    'images/6.jpg',
+    'images/4.jpg',
     'images/gallery vid.png',
     'images/gallery 360.png'
 ];
