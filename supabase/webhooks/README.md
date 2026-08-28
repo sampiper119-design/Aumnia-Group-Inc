@@ -1,79 +1,103 @@
-# Database Webhooks — email notifications setup
+# Email notifications — how they work
 
-This wires `inquiries` and `tour_bookings` INSERTs to the
-`handle-form-submission` Edge Function, which emails Mrs. Piper (and, for
-tour bookings, the visitor too) via Resend.
+When a visitor submits the contact form or books a tour, a row is inserted into
+`inquiries` or `tour_bookings`. A trigger on that table calls the
+`handle-form-submission` Edge Function, which sends email through Resend.
 
-## 1. Deploy the Edge Function
+```
+browser → Supabase (insert row) → trigger → Edge Function → Resend → inbox
+```
 
-From the `Aumnia-Group-Inc` folder, with the [Supabase CLI](https://supabase.com/docs/guides/cli) installed and logged in:
+**This is already set up on the live project.** Nothing below needs doing
+again unless you are rebuilding from scratch or rotating the secret.
+
+## What's already configured
+
+| Piece | Where it lives | Status |
+|---|---|---|
+| `handle-form-submission` function | `supabase/functions/` | deployed, ACTIVE |
+| Triggers on both tables | `supabase/migrations/002_...sql` | applied |
+| `DB_WEBHOOK_SECRET` | Edge Function secret + Vault | set, verified matching |
+| `ADMIN_EMAIL` | Edge Function secret | set |
+| `RESEND_API_KEY` | Edge Function secret | **NOT SET — blocks all email** |
+
+The triggers are created in SQL (`pg_net`) rather than through the dashboard's
+**Database → Webhooks** UI. Both approaches do the same thing, but the SQL
+version lives in this repo and can be re-applied anywhere. If you look in the
+dashboard's Webhooks tab you will see nothing listed — that is expected, and
+does not mean it is broken. Check `information_schema.triggers` instead.
+
+## The shared secret
+
+The function refuses any request that doesn't present the right
+`x-webhook-secret` header, so a random POST to its public URL can't send email
+through it. The same value is stored in two places, which must match:
+
+1. The `DB_WEBHOOK_SECRET` Edge Function secret
+2. A Supabase Vault secret named `webhook_secret`, read by the trigger at runtime
+
+Because it's read from Vault, the real value never appears in this repo.
+
+To rotate it:
+
+```sql
+select vault.update_secret(
+  (select id from vault.secrets where name = 'webhook_secret'),
+  'the-new-secret'
+);
+```
+
+```bash
+supabase secrets set --project-ref yxbmogimmvqczqufgqzy DB_WEBHOOK_SECRET=the-new-secret
+```
+
+## Finishing the setup (the one remaining step)
+
+Email will not send until a Resend key exists. Create one at
+[resend.com](https://resend.com) → **API Keys** → sending access, then:
+
+```bash
+supabase secrets set --project-ref yxbmogimmvqczqufgqzy RESEND_API_KEY=re_your_key_here
+```
+
+**Free-tier limitation worth knowing:** until a sending domain is verified in
+Resend, you can only send to the address the Resend account was registered
+with. Other recipients — including visitor confirmation emails — will not be
+delivered. Verify a domain under Resend → **Domains** before launch.
+
+Optionally set the "from" address once a domain is verified:
+
+```bash
+supabase secrets set --project-ref yxbmogimmvqczqufgqzy \
+  RESEND_FROM_EMAIL="Aumnia Group Inc. <hello@yourdomain.com>"
+```
+
+## Testing and debugging
+
+Insert a row and watch the queued HTTP call:
+
+```sql
+insert into public.inquiries (name, email, inquiry_type, message)
+values ('Test', 'you@example.com', 'general', 'testing');
+
+-- give it a few seconds, then:
+select id, status_code, content from net._http_response order by id desc limit 1;
+```
+
+| Response | Meaning |
+|---|---|
+| `200` | Email sent |
+| `401 Unauthorized` | Secret mismatch between Vault and the function secret |
+| `500 RESEND_API_KEY is not set` | Expected until the Resend key is added |
+| no row at all | Trigger didn't fire — check it exists on the table |
+
+Function logs are under **Edge Functions → handle-form-submission → Logs** in
+the dashboard.
+
+## Redeploying the function after editing it
 
 ```bash
 supabase functions deploy handle-form-submission --project-ref yxbmogimmvqczqufgqzy
 ```
 
-## 2. Set the function's secrets
-
-Set these once (Dashboard: **Project Settings → Edge Functions → Secrets**,
-or via CLI):
-
-```bash
-supabase secrets set --project-ref yxbmogimmvqczqufgqzy \
-  RESEND_API_KEY=your_resend_api_key_here \
-  ADMIN_EMAIL=mrs.piper@example.com \
-  DB_WEBHOOK_SECRET=generate_a_long_random_string_here
-```
-
-- `RESEND_API_KEY` — from your Resend dashboard (pending; use a placeholder
-  until it's ready — the function will just fail to send until it's real).
-- `ADMIN_EMAIL` — pending; Mrs. Piper's real inbox. Placeholder until given.
-- `DB_WEBHOOK_SECRET` — you invent this value yourself (any long random
-  string). It's how the function knows a request really came from Supabase's
-  webhook and not a random POST from the internet — the webhook config in
-  step 3 sends it as a header, and the function checks it matches. Generate
-  one with `openssl rand -hex 32` or similar; save it somewhere, you'll paste
-  it again in step 3.
-- `RESEND_FROM_EMAIL` (optional) — e.g. `"Aumnia Group Inc. <hello@aumnia.com>"`.
-  Until a sending domain is verified in Resend, omit this and the function
-  falls back to Resend's shared test address, which only delivers to your
-  own verified Resend account email — fine for testing, not for real visitor
-  emails.
-
-## 3. Create the two Database Webhooks
-
-Dashboard → **Database → Webhooks → Create a new webhook**. Do this twice,
-once per table — same target URL and secret header both times.
-
-**Webhook A — on `inquiries`**
-| Field | Value |
-|---|---|
-| Name | `notify-on-inquiry` |
-| Table | `inquiries` |
-| Events | `Insert` only |
-| Type | `HTTP Request` |
-| Method | `POST` |
-| URL | `https://yxbmogimmvqczqufgqzy.supabase.co/functions/v1/handle-form-submission` |
-| HTTP Headers | `Content-Type: application/json` and `x-webhook-secret: <the DB_WEBHOOK_SECRET value from step 2>` |
-
-**Webhook B — on `tour_bookings`**
-Same as above, except:
-| Field | Value |
-|---|---|
-| Name | `notify-on-tour-booking` |
-| Table | `tour_bookings` |
-
-Leave the payload format as Supabase's default — the function expects the
-standard `{ type, table, record, schema, old_record }` shape and does not
-need a custom payload template.
-
-## 4. Test it
-
-Insert a test row directly in the Table Editor (Dashboard → Table Editor →
-`inquiries` → Insert row, fill in name/email/message) and confirm an email
-arrives at `ADMIN_EMAIL`. Do the same for `tour_bookings` with a
-`requested_date`/`requested_time`, and confirm both the admin email and the
-visitor confirmation email arrive.
-
-Check **Edge Functions → handle-form-submission → Logs** in the dashboard if
-nothing arrives — it will show the actual error (missing secret, bad Resend
-key, etc.).
+The Docker warning is harmless — the deploy uploads through the API.
