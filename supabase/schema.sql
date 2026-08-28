@@ -40,14 +40,21 @@ create index if not exists property_images_property_id_idx
 
 -- inquiries ------------------------------------------------------------------
 create table if not exists public.inquiries (
-  id          uuid primary key default gen_random_uuid(),
-  name        text not null,
-  email       text not null,
-  phone       text,
-  message     text,
-  property_id uuid references public.properties(id) on delete set null,
-  created_at  timestamptz not null default now()
+  id           uuid primary key default gen_random_uuid(),
+  name         text not null,
+  email        text not null,
+  phone        text,
+  -- Matches Contact.html's "Select Inquiry/Request" dropdown
+  -- (general | investment | commercial | airbnb).
+  inquiry_type text,
+  message      text,
+  property_id  uuid references public.properties(id) on delete set null,
+  created_at   timestamptz not null default now()
 );
+-- Added after the initial table create — safe to re-run on a table that
+-- already has this column.
+alter table public.inquiries
+  add column if not exists inquiry_type text;
 create index if not exists inquiries_property_id_idx
   on public.inquiries(property_id);
 
