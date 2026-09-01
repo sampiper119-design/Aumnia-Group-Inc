@@ -84,6 +84,20 @@ img {
     font-weight: 400;
 }
 
+.contact-block a {
+    color: white;
+    text-decoration: none;
+}
+
+.contact-block a:hover {
+    text-decoration: underline;
+}
+
+.contact-block a:visited {
+    color: #ffdf80;
+    text-decoration: underline;
+}
+
 /* ------------------ Navigation Bar -------------------------------- */
 nav {
     background-color: var(--primary-color);
