@@ -1,0 +1,11 @@
+# Minimal Supabase CLI config for this project.
+# Only used for local `supabase functions deploy` — does not affect the
+# hosted project's dashboard settings.
+
+project_id = "yxbmogimmvqczqufgqzy"
+
+[functions.handle-form-submission]
+# Disabled because this function is only ever called server-to-server by a
+# Supabase Database Webhook, not by a logged-in browser session. It checks
+# its own shared-secret header (DB_WEBHOOK_SECRET) instead of a user JWT.
+verify_jwt = false

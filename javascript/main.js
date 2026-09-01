@@ -403,9 +403,14 @@ document.addEventListener('DOMContentLoaded', () => {
     const contactForms = document.querySelectorAll('.contact-form');
     
     contactForms.forEach(form => {
+        // Forms wired to Supabase handle their own submit (see contact-form.js)
+        // and only show the modal once the insert actually succeeds. Skip them
+        // here so we don't report success before the request has been made.
+        if (form.dataset.backend === 'supabase') return;
+
         form.addEventListener('submit', (event) => {
             event.preventDefault(); // Prevent standard page refresh
-            
+
             // Show Modal
             const modal = document.getElementById('form-modal');
             if (modal) {

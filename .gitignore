@@ -1,0 +1,14 @@
+# Supabase CLI local state (machine-specific link info, not project config)
+supabase/.temp/
+supabase/.branches/
+
+# Never commit real secrets — Edge Function secrets live in the Supabase
+# dashboard (Project Settings > Edge Functions > Secrets), not in this repo.
+.env
+.env.*
+!.env.example
+SECRETS-LOCAL.txt
+
+# OS / editor noise
+Thumbs.db
+.DS_Store

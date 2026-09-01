@@ -83,7 +83,7 @@
                     Airbnb/Vacation rentals can be submitted using the form below.
                 </p>
 
-                <form class="contact-form" action="#" method="POST">
+                <form class="contact-form" action="#" method="POST" data-backend="supabase">
                     <!-- Name Field -->
                     <div class="form-group">
                         <label for="name">Name: <span class="required">(*required*)</span></label>
@@ -124,6 +124,9 @@
 
                     <!-- Submit Button -->
                     <button type="submit" class="submit-btn">Submit Form</button>
+
+                    <!-- Inline submit status (unstyled placeholder; populated by contact-form.js) -->
+                    <p id="formStatus" role="status" aria-live="polite"></p>
                 </form>
              </section>
             <!-- Form Section Ends-->
@@ -268,5 +271,10 @@
                     </div>
                 </div>
              </div>
+
+            <!-- Backend: Supabase client + page scripts (must load in this order) -->
+             <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+             <script src="javascript/supabase-client.js"></script>
+             <script src="javascript/contact-form.js"></script>
         </body>
     </html>
