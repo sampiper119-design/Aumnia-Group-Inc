@@ -1,175 +1,134 @@
-// Mobile Navigation Toggle
+// Mobile navigation (button toggle, Esc to close, focus returns to button)
 document.addEventListener('DOMContentLoaded', () => {
-    const navToggle = document.getElementById('navToggle');
-    const navLinks = document.getElementById('navLinks');
-
-    if (navToggle && navLinks) {
-        navToggle.addEventListener('click', () => {
-            const isOpen = navLinks.classList.toggle('is-open');
-            navToggle.classList.toggle('is-active', isOpen);
-            navToggle.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
-        });
-
-        navLinks.querySelectorAll('a').forEach(link => {
-            link.addEventListener('click', () => {
-                navLinks.classList.remove('is-open');
-                navToggle.classList.remove('is-active');
-                navToggle.setAttribute('aria-expanded', 'false');
-            });
-        });
-    }
+    const toggle = document.getElementById('navToggle');
+    const links = document.getElementById('navLinks');
+    if (!toggle || !links) return;
+    const setOpen = (open, returnFocus) => {
+        links.classList.toggle('is-open', open);
+        toggle.classList.toggle('is-active', open);
+        toggle.setAttribute('aria-expanded', String(open));
+        if (!open && returnFocus) toggle.focus();
+    };
+    toggle.addEventListener('click', () => setOpen(!links.classList.contains('is-open')));
+    links.querySelectorAll('a').forEach(a => a.addEventListener('click', () => setOpen(false)));
+    document.addEventListener('keydown', e => {
+        if (e.key === 'Escape' && links.classList.contains('is-open')) setOpen(false, true);
+    });
+    window.matchMedia('(min-width: 961px)').addEventListener('change', e => { if (e.matches) setOpen(false); });
 });
 
-//Contact page tour scheduling calendar pseudo interaction
+// Contact page: keyboard-accessible tour scheduling calendar
 document.addEventListener('DOMContentLoaded', () => {
     const daysGrid = document.getElementById('daysGrid');
+    if (!daysGrid) return;
     const monthYearLabel = document.getElementById('monthYearLabel');
-    const prevBtn = document.getElementById('prevMonth');
-    const nextBtn = document.getElementById('nextMonth');
     const timePopup = document.getElementById('timePopup');
     const selectedDateText = document.getElementById('selectedDateText');
-    const closePopupBtn = document.getElementById('closePopupBtn');
+    const timeSelect = document.getElementById('timeSlot');
+    const widget = daysGrid.closest('.calendar-widget');
+    const status = document.createElement('p');
+    status.className = 'schedule-status';
+    status.setAttribute('role', 'status');
+    widget.insertAdjacentElement('afterend', status);
 
-    let currentDate = new Date(2026, 7, 1); // August 2026 default
+    const monthNames = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+    const currentDate = new Date();
+    currentDate.setDate(1);
+    let selectedButton = null;
+
+    function closePopup(returnFocus) {
+        timePopup.classList.remove('is-visible');
+        daysGrid.querySelectorAll('.day-cell').forEach(c => { c.classList.remove('active-day'); c.setAttribute('aria-pressed', 'false'); });
+        if (returnFocus && selectedButton) selectedButton.focus();
+    }
 
     function renderCalendar() {
         daysGrid.innerHTML = '';
-        
         const year = currentDate.getFullYear();
         const month = currentDate.getMonth();
-
-        // Header Label
-        const monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
         monthYearLabel.textContent = `${monthNames[month]} ${year}`;
-
-        // Get first day of month & total days
         const firstDayIndex = new Date(year, month, 1).getDay();
         const totalDays = new Date(year, month + 1, 0).getDate();
 
-        // Empty cells for alignment before start of month
         for (let i = 0; i < firstDayIndex; i++) {
-            const emptyCell = document.createElement('div');
-            emptyCell.classList.add('day-cell', 'empty-cell');
-            daysGrid.appendChild(emptyCell);
+            const empty = document.createElement('div');
+            empty.className = 'day-cell empty-cell';
+            empty.setAttribute('aria-hidden', 'true');
+            daysGrid.appendChild(empty);
         }
-
-        // Render actual day cells
         for (let day = 1; day <= totalDays; day++) {
-            const dayCell = document.createElement('div');
-            dayCell.classList.add('day-cell');
-            dayCell.textContent = day;
-
-            dayCell.addEventListener('click', () => {
-                document.querySelectorAll('.day-cell').forEach(c => c.classList.remove('active-day'));
-                dayCell.classList.add('active-day');
-
-                if (selectedDateText) {
-                    selectedDateText.textContent = `${monthNames[month]} ${day}`;
-                }
-
-                // Display first to get actual rendered width
+            const cell = document.createElement('button');
+            cell.type = 'button';
+            cell.className = 'day-cell';
+            cell.textContent = day;
+            cell.setAttribute('aria-pressed', 'false');
+            cell.setAttribute('aria-label', `${monthNames[month]} ${day}, ${year}`);
+            cell.addEventListener('click', () => {
+                closePopup(false);
+                selectedButton = cell;
+                cell.classList.add('active-day');
+                cell.setAttribute('aria-pressed', 'true');
+                selectedDateText.textContent = `${monthNames[month]} ${day}`;
                 timePopup.classList.add('is-visible');
-
-                // Calculate boundary constraints
                 const containerWidth = daysGrid.parentElement.offsetWidth;
                 const popupWidth = timePopup.offsetWidth;
-
-                let leftPos = dayCell.offsetLeft - 20;
-
-                // Keep popup inside left boundary
-                if (leftPos < 10) {
-                    leftPos = 10;
-                }
-                // Keep popup inside right boundary
-                else if (leftPos + popupWidth > containerWidth - 10) {
-                    leftPos = containerWidth - popupWidth - 10;
-                }
-
-                timePopup.style.top = `${dayCell.offsetTop + 36}px`;
+                let leftPos = cell.offsetLeft - 20;
+                if (leftPos < 10) leftPos = 10;
+                else if (leftPos + popupWidth > containerWidth - 10) leftPos = containerWidth - popupWidth - 10;
+                timePopup.style.top = `${cell.offsetTop + 36}px`;
                 timePopup.style.left = `${leftPos}px`;
+                timeSelect?.focus();
             });
-
-            daysGrid.appendChild(dayCell);
+            daysGrid.appendChild(cell);
         }
     }
 
-    // Month Navigation
-    prevBtn?.addEventListener('click', () => {
-        currentDate.setMonth(currentDate.getMonth() - 1);
-        timePopup.classList.remove('is-visible');
-        renderCalendar();
+    document.getElementById('prevMonth')?.addEventListener('click', () => { currentDate.setMonth(currentDate.getMonth() - 1); closePopup(false); renderCalendar(); });
+    document.getElementById('nextMonth')?.addEventListener('click', () => { currentDate.setMonth(currentDate.getMonth() + 1); closePopup(false); renderCalendar(); });
+    document.getElementById('closePopupBtn')?.addEventListener('click', () => closePopup(true));
+    timePopup.addEventListener('keydown', e => { if (e.key === 'Escape') closePopup(true); });
+    document.getElementById('confirmTimeBtn')?.addEventListener('click', () => {
+        if (!timeSelect.value) {
+            status.textContent = 'Please choose a time before confirming.';
+            timeSelect.focus();
+            return;
+        }
+        status.textContent = `Selected: ${selectedDateText.textContent} at ${timeSelect.options[timeSelect.selectedIndex].text}.`;
+        closePopup(true);
     });
-
-    nextBtn?.addEventListener('click', () => {
-        currentDate.setMonth(currentDate.getMonth() + 1);
-        timePopup.classList.remove('is-visible');
-        renderCalendar();
-    });
-
     renderCalendar();
+});
 
-    closePopupBtn?.addEventListener('click', () => {
-        timePopup.classList.remove('is-visible');
-        document.querySelectorAll('.day-cell').forEach(c => c.classList.remove('active-day'));
+// Properties gallery (buttons, arrow keys, alt text follows the slide)
+document.addEventListener('DOMContentLoaded', () => {
+    const mainImg = document.getElementById('mainSlide');
+    const counter = document.getElementById('slideCounter');
+    const thumbs = Array.from(document.querySelectorAll('.thumb-item'));
+    if (!mainImg || !counter || !thumbs.length) return;
+    let index = 0;
+    const show = i => {
+        index = (i + thumbs.length) % thumbs.length;
+        const t = thumbs[index];
+        mainImg.src = t.dataset.src;
+        mainImg.alt = t.dataset.alt;
+        counter.textContent = `${index + 1}/${thumbs.length}`;
+        thumbs.forEach((th, n) => {
+            th.classList.toggle('active', n === index);
+            th.setAttribute('aria-current', n === index ? 'true' : 'false');
+        });
+    };
+    document.querySelectorAll('[data-slide-dir]').forEach(b => b.addEventListener('click', () => show(index + Number(b.dataset.slideDir))));
+    thumbs.forEach((t, n) => t.addEventListener('click', () => show(n)));
+    mainImg.closest('.properties-gallery').addEventListener('keydown', e => {
+        if (e.key === 'ArrowLeft') show(index - 1);
+        if (e.key === 'ArrowRight') show(index + 1);
     });
 });
 
-// Properties Gallery Slideshow Logic
-const slides = [
-    'images/8.jpg',
-    'images/3.jpg',
-    'images/1.jpg',
-    'images/6.jpg',
-    'images/4.jpg',
-    'images/gallery vid.png',
-    'images/gallery 360.png'
-];
-
-let currentSlideIndex = 0;
-
-function updateSlide() {
-    const mainImg = document.getElementById('mainSlide');
-    const counter = document.getElementById('slideCounter');
-    const thumbs = document.querySelectorAll('.thumb-item');
-
-    if (!mainImg || !counter) return;
-
-    // Update main image source and counter text
-    mainImg.src = slides[currentSlideIndex];
-    counter.textContent = `${currentSlideIndex + 1}/${slides.length}`;
-
-    // Active state toggling on thumbnails
-    thumbs.forEach((thumb, index) => {
-        if (index === currentSlideIndex) {
-            thumb.classList.add('active');
-        } else {
-            thumb.classList.remove('active');
-        }
-    });
-}
-
-function changeSlide(direction) {
-    currentSlideIndex += direction;
-    
-    // Loop navigation
-    if (currentSlideIndex < 0) {
-        currentSlideIndex = slides.length - 1;
-    } else if (currentSlideIndex >= slides.length) {
-        currentSlideIndex = 0;
-    }
-    
-    updateSlide();
-}
-
-function setSlide(index) {
-    currentSlideIndex = index;
-    updateSlide();
-}
-
 // Rate & Fee Configurations
 const RENT_CONFIG = {
-    'vacation-commercial': { baseNightly: 200, cleaningFee: 45, taxRate: 0.12 },
-    'residential': { baseNightly: 120, cleaningFee: 35, taxRate: 0.08 }
+    'commercial': { baseNightly: 80, taxRate: 0.15 },
+    'residential': { baseNightly: 80, taxRate: 0.15 }
 };
 
 const ADDON_PRICES = {
@@ -180,17 +139,18 @@ const ADDON_PRICES = {
 };
 
 const INVEST_CONFIG = {
-    'vacation-commercial': 0.182, // 18.2% ROI
-    'residential': 0.125          // 12.5% ROI
+    'commercial': 0.182, // 18.2% ROI
+    'residential': 0.125  // 12.5% ROI
 };
 
 // Global Calculator Controller
 function calculateCosts() {
-    const isInvestPage = document.body.classList.contains('invest-page');
-    const isPropertiesInvest = !isInvestPage && document.getElementById('form-invest')?.classList.contains('active');
-
-    if (isInvestPage || isPropertiesInvest) {
-        calculateInvestROI(isInvestPage);
+    const investForm = document.getElementById('form-invest');
+    const investPageForm = document.getElementById('form-invest-page');
+    
+    // Check if on Invest page or Invest mode tab is active
+    if (investPageForm || (investForm && investForm.classList.contains('active'))) {
+        calculateInvestROI(document.body.classList.contains('invest-page'));
     } else {
         calculateRentCost();
     }
@@ -198,36 +158,68 @@ function calculateCosts() {
 
 // Rent Calculator Logic
 function calculateRentCost() {
-    const propType = document.getElementById('rent-property-type')?.value || 'vacation-commercial';
-    const startDateInput = document.querySelector('.date-inputs input[placeholder*="Start"]');
-    const endDateInput = document.querySelector('.date-inputs input[placeholder*="End"]');
+    const propType = document.getElementById('rent-property-type')?.value || 'commercial';
+    const startDateInput = document.getElementById('rent-start');
+    const endDateInput = document.getElementById('rent-end');
     
-    // Default to 1 night if dates are invalid or missing
     let nights = 1;
+    let baseRate = 0;
+    
+    // Parse start and end dates if provided
     if (startDateInput?.value && endDateInput?.value) {
-        const start = new Date(startDateInput.value);
-        const end = new Date(endDateInput.value);
+        const start = new Date(startDateInput.value + 'T00:00:00');
+        const end = new Date(endDateInput.value + 'T00:00:00');
+        
+        // Calculate total calendar days
         const diffTime = end - start;
         const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
         nights = diffDays > 0 ? diffDays : 1;
+
+        if (nights >= 30) {
+            // Monthly calculation logic ($800 per 30 days)
+            const months = Math.floor(nights / 30);
+            const remainingNights = nights % 30;
+            
+            // Calculate remaining nights with standard weekend logic
+            let remainingCost = 0;
+            let currentDate = new Date(start);
+            currentDate.setDate(currentDate.getDate() + (months * 30));
+            
+            for (let i = 0; i < remainingNights; i++) {
+                const dayOfWeek = currentDate.getDay(); // 5 = Friday, 6 = Saturday
+                remainingCost += (dayOfWeek === 5 || dayOfWeek === 6) ? 88 : 80;
+                currentDate.setDate(currentDate.getDate() + 1);
+            }
+
+            baseRate = (months * 800) + remainingCost;
+        } else {
+            // Nightly calculation with weekend adjustments
+            let currentDate = new Date(start);
+            for (let i = 0; i < nights; i++) {
+                const dayOfWeek = currentDate.getDay(); // 5 = Friday, 6 = Saturday
+                baseRate += (dayOfWeek === 5 || dayOfWeek === 6) ? 88 : 80;
+                currentDate.setDate(currentDate.getDate() + 1);
+            }
+        }
+    } else {
+        // Default single night base rate
+        baseRate = 80;
     }
 
-    const config = RENT_CONFIG[propType] || RENT_CONFIG['vacation-commercial'];
-    const baseRate = config.baseNightly * nights;
+    const config = RENT_CONFIG[propType] || RENT_CONFIG['commercial'];
 
-    // Calculate selected add-ons
+    // Calculate selected add-ons if present
     let addonTotal = 0;
     document.querySelectorAll('#form-rent input[name="addon"]:checked').forEach(checkbox => {
         addonTotal += ADDON_PRICES[checkbox.value] || 0;
     });
 
-    const cleaningFee = config.cleaningFee;
-    const subtotal = baseRate + cleaningFee + addonTotal;
+    const subtotal = baseRate + addonTotal;
     const taxes = subtotal * config.taxRate;
     const totalCost = subtotal + taxes;
 
     // Update DOM output
-    const totalDisplay = document.getElementById('total-amount');
+    const totalDisplay = document.getElementById('total-amount-rent');
     const breakdownContainer = document.getElementById('breakdown-rent');
 
     if (totalDisplay) {
@@ -237,9 +229,7 @@ function calculateRentCost() {
     if (breakdownContainer) {
         breakdownContainer.innerHTML = `
             <div class="breakdown-item"><span>Base Rate (${nights} night${nights > 1 ? 's' : ''}) =</span> <b>$${baseRate.toLocaleString()}</b></div>
-            <div class="breakdown-item"><span>Cleaning & Maintenance Fee =</span> <b>$${cleaningFee.toLocaleString()}</b></div>
-            ${addonTotal > 0 ? `<div class="breakdown-item"><span>Selected Add-ons =</span> <b>$${addonTotal.toLocaleString()}</b></div>` : ''}
-            <div class="breakdown-item"><span>Taxes & Fees =</span> <b>$${Math.round(taxes).toLocaleString()}</b></div>
+            <div class="breakdown-item"><span>Service Fees (15%) =</span> <b>$${Math.round(taxes).toLocaleString()}</b></div>
         `;
     }
 }
@@ -249,11 +239,11 @@ function calculateInvestROI(isInvestPage = false) {
     const capitalId = isInvestPage ? 'invest-capital-page' : 'invest-capital';
     const strategyId = isInvestPage ? 'invest-strategy-page' : 'invest-strategy';
     const targetId = isInvestPage ? 'invest-target-page' : 'invest-target';
-    const totalId = isInvestPage ? 'total-amount-invest' : 'total-amount';
+    const totalId = 'total-amount-invest'; // Standardized for both pages
     const breakdownId = isInvestPage ? 'breakdown-invest-page' : 'breakdown-invest';
 
     const capital = parseFloat(document.getElementById(capitalId)?.value) || 0;
-    const strategy = document.getElementById(strategyId)?.value || 'vacation-commercial';
+    const strategy = document.getElementById(strategyId)?.value || 'commercial';
     const years = parseFloat(document.getElementById(targetId)?.value) || 1;
 
     const yieldRate = INVEST_CONFIG[strategy] || 0.182;
@@ -275,28 +265,27 @@ function calculateInvestROI(isInvestPage = false) {
             <div class="breakdown-item"><span>Target Annual Yield (${(yieldRate * 100).toFixed(1)}%) =</span> <b>$${Math.round(annualYield).toLocaleString()}/yr</b></div>
             <div class="breakdown-item"><span>Holding Duration =</span> <b>${years} Year${years > 1 ? 's' : ''}</b></div>
             <div class="breakdown-item"><span>Estimated Net Profit =</span> <b>$${Math.round(netProfit).toLocaleString()}</b></div>
-            <a href="#" class="btn-prospectus">Request Full Prospectus</a>
+            <a href="${isInvestPage ? '#form' : 'Invest.html#form'}" class="btn-prospectus">Request Full Prospectus</a>
         `;
     }
 }
 
-// Sync range slider display and live updates on page load
+// Calculator wiring (forms submit with Enter or button; no inline handlers)
 document.addEventListener('DOMContentLoaded', () => {
-    // Attach event listeners to all calculate buttons
-    document.querySelectorAll('.btn-calculate').forEach(button => {
-        button.addEventListener('click', calculateCosts);
+    document.querySelectorAll('.calc-mode-form').forEach(form => {
+        form.addEventListener('submit', e => {
+            e.preventDefault();
+            if (form.id === 'form-rent') calculateRentCost();
+            else calculateInvestROI(document.body.classList.contains('invest-page'));
+        });
     });
-
-    // Sync input updates for capital sliders
-    const investCapitalSlider = document.getElementById('invest-capital');
-    const investCapitalPageSlider = document.getElementById('invest-capital-page');
-
-    if (investCapitalSlider) {
-        investCapitalSlider.addEventListener('input', (e) => updateCapitalValue(e.target.value));
-    }
-    if (investCapitalPageSlider) {
-        investCapitalPageSlider.addEventListener('input', (e) => updateCapitalValue(e.target.value));
-    }
+    document.querySelectorAll('input[type="range"][id^="invest-capital"]').forEach(s => s.addEventListener('input', e => updateCapitalValue(e.target.value)));
+    document.querySelectorAll('[data-calc-mode]').forEach(btn => btn.addEventListener('click', () => {
+        switchCalcMode(btn.dataset.calcMode);
+        document.querySelectorAll('[data-calc-mode]').forEach(b => b.setAttribute('aria-pressed', String(b.classList.contains('active'))));
+    }));
+    const slider = document.querySelector('.range-wrapper input[type="range"]');
+    if (slider && document.getElementById('capital-display')) updateCapitalValue(slider.value);
 });
 
 // Calculator Javascript
@@ -343,7 +332,9 @@ function switchCalcMode(mode) {
 
 // Slider Display Helper
 function updateCapitalValue(val) {
-    document.getElementById('capital-display').innerText = '$' + Number(val).toLocaleString();
+    const text = '$' + Number(val).toLocaleString();
+    document.getElementById('capital-display').textContent = text;
+    document.querySelectorAll('.range-wrapper input[type="range"]').forEach(s => s.setAttribute('aria-valuetext', text));
 }
 
 // Dynamic Slider Trail Progress Update
@@ -379,72 +370,88 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 });
 
-// Toggle ROI Calculator Accordion on Invest Page
-function toggleInvestCalculator(e) {
-    if (e) e.preventDefault();
-
-    const calcContainer = document.getElementById('invest-calc-section');
-    if (!calcContainer) return;
-
-    // Toggle expanded class
-    calcContainer.classList.toggle('is-expanded');
-
-    // Smooth scroll into view if expanded
-    if (calcContainer.classList.contains('is-expanded')) {
-        setTimeout(() => {
-            calcContainer.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-        }, 150);
+// Toggle ROI calculator accordion (Invest page)
+function toggleInvestCalculator() {
+    const panel = document.getElementById('invest-calc-section');
+    const btn = document.querySelector('[data-calc-toggle]');
+    if (!panel) return;
+    const open = panel.classList.toggle('is-expanded');
+    if (btn) btn.setAttribute('aria-expanded', String(open));
+    if (open) {
+        const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        setTimeout(() => panel.scrollIntoView({ behavior: reduce ? 'auto' : 'smooth', block: 'nearest' }), 150);
     }
 }
-
-// Form Modal Javascript
 document.addEventListener('DOMContentLoaded', () => {
-    // Intercept form submissions across contact forms
-    const contactForms = document.querySelectorAll('.contact-form');
-    
-    contactForms.forEach(form => {
-        // Forms wired to Supabase handle their own submit (see contact-form.js)
-        // and only show the modal once the insert actually succeeds. Skip them
-        // here so we don't report success before the request has been made.
+    document.querySelector('[data-calc-toggle]')?.addEventListener('click', toggleInvestCalculator);
+});
+
+// Inquiry forms: confirmation dialog, or an announced status message if the page has no dialog
+// (forms using a backend, e.g. Supabase, handle their own submit)
+document.addEventListener('DOMContentLoaded', () => {
+    document.querySelectorAll('.contact-form').forEach(form => {
         if (form.dataset.backend === 'supabase') return;
-
-        form.addEventListener('submit', (event) => {
-            event.preventDefault(); // Prevent standard page refresh
-
-            // Show Modal
+        form.addEventListener('submit', event => {
+            event.preventDefault();
+            const status = form.querySelector('[role="status"]');
             const modal = document.getElementById('form-modal');
-            if (modal) {
-                modal.classList.add('active');
-            }
-            
-            // Reset input fields
             form.reset();
+            if (modal) modal.classList.add('active');
+            else if (status) status.textContent = 'Thank you! Your inquiry has been submitted.';
         });
     });
 });
 
-// Close modal handler
 function closeFormModal() {
     const modal = document.getElementById('form-modal');
-    if (modal) {
-        modal.classList.remove('active');
-    }
+    if (modal) modal.classList.remove('active');
 }
-
-//FAQs Modal Javascript
-// Open FAQ Modal
 function openFaqModal(event) {
-    if (event) event.preventDefault(); // Prevent page scroll jump (#)
-    const faqModal = document.getElementById('faq-modal');
-    if (faqModal) {
-        faqModal.classList.add('active');
-    }
+    if (event) event.preventDefault();
+    document.getElementById('faq-modal')?.classList.add('active');
+}
+function closeFaqModal() {
+    document.getElementById('faq-modal')?.classList.remove('active');
 }
 
-// Close FAQ Modal
-function closeFaqModal() {
-    const faqModal = document.getElementById('faq-modal');
-    if (faqModal) {
-        faqModal.classList.remove('active');
-    }
-}
+// Dialog behaviour for every .modal-overlay, however it is opened (including by other scripts):
+// focus moves in, Tab is trapped, Esc / overlay click / close buttons dismiss, focus returns.
+document.addEventListener('DOMContentLoaded', () => {
+    document.querySelectorAll('[data-faq-open]').forEach(b => b.addEventListener('click', openFaqModal));
+    document.querySelectorAll('[data-faq-close]').forEach(b => b.addEventListener('click', closeFaqModal));
+    document.querySelectorAll('[data-form-close]').forEach(b => b.addEventListener('click', closeFormModal));
+
+    const overlays = Array.from(document.querySelectorAll('.modal-overlay'));
+    const lastFocus = new Map();
+    const activeOverlay = () => overlays.find(o => o.classList.contains('active'));
+
+    overlays.forEach(overlay => {
+        let wasActive = false;
+        overlay.addEventListener('click', e => { if (e.target === overlay) overlay.classList.remove('active'); });
+        new MutationObserver(() => {
+            const isActive = overlay.classList.contains('active');
+            if (isActive === wasActive) return;
+            wasActive = isActive;
+            document.body.classList.toggle('modal-open', Boolean(activeOverlay()));
+            if (isActive) {
+                lastFocus.set(overlay, document.activeElement);
+                overlay.querySelector('.modal-card')?.focus();
+            } else {
+                lastFocus.get(overlay)?.focus();
+            }
+        }).observe(overlay, { attributes: true, attributeFilter: ['class'] });
+    });
+
+    document.addEventListener('keydown', e => {
+        const overlay = activeOverlay();
+        if (!overlay) return;
+        if (e.key === 'Escape') { overlay.classList.remove('active'); return; }
+        if (e.key !== 'Tab') return;
+        const card = overlay.querySelector('.modal-card');
+        const f = Array.from(overlay.querySelectorAll('a[href], button:not([disabled])'));
+        if (!f.length) return;
+        const first = f[0], last = f[f.length - 1];
+        if (e.shiftKey && (document.activeElement === first || document.activeElement === card)) { e.preventDefault(); last.focus(); }
+        else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+    });
+});

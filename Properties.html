@@ -23,7 +23,11 @@
         </head>
 
         <body class="properties-page">
+            <!-- allows screen readers to skip through navigation links-->
+            <a class="skip-link" href="#main">Skip to main content</a>
+
             <!-- Header Section Starts-->
+            <header>
              <div class="hero">
                 <nav>
                     <div class="left-side">
@@ -49,8 +53,8 @@
                             </ul>
                         </div>
                         <div class="social-icons">
-                            <a href="https://www.tiktok.com/@aumnia.group.inc" class="fab fa-tiktok"></a>
-                            <a href="mailto:lilianpiperapartments@gmail.com" class="fas fa-envelope-open"></a>
+                            <a href="https://www.tiktok.com/@aumnia.group.inc" target="_blank" rel="noopener noreferrer" aria-label="Aumnia Group Inc. on TikTok (opens in a new tab)"><i class="fab fa-tiktok" aria-hidden="true"></i></a>
+                            <a href="mailto:lilianpiperapartments@gmail.com" aria-label="Email Aumnia Group Inc."><i class="fas fa-envelope-open" aria-hidden="true"></i></a>
                         </div>
                     </div>
                 </nav>
@@ -61,17 +65,20 @@
              </div>
 
              <div class="contact-block">
-                <h3>Location: 34 Downsville Avenue, Hayan | Email: <a href="mailto:lilianpiperapartments@gmail.com">lilianpiperapartments@gmail.com</a> | Call Us: (767)612-2411</h3>
+                <h3>Location: Lizard Trail, Picard • Portsmouth, Dominica | Email: <a href="mailto:lilianpiperapartments@gmail.com">lilianpiperapartments@gmail.com</a> | Call Us: <a href="tel:(767)612-2411">(767)612-2411</a></h3>
              </div>
+            </header>
             <!-- Header Section Ends-->
 
+            <main id="main">
             <!-- Properties Section Starts -->
              <section class="properties-section">
                 <div class="properties-container">
                     <!-- Left Column: Gallery Slideshow -->
                     <div class="properties-gallery">
                         <!-- Main Display View -->
-                        <div class="slide-container">
+                        <!--role and aria-label provide info for screen readers-->
+                        <div class="slide-container" role="group" aria-label="Property photo gallery">
                             <!-- Main Image Slide -->
                             <img id="mainSlide" src="images/8.jpg" alt="Loving Hills Main View" height="400" width="600">
 
@@ -88,34 +95,20 @@
                         </div>
 
                         <!-- Thumbnail Strip -->
+                        <!-- Thumbnail button: selects this photo for the main gallery view (keyboard-accessible, labeled for screen readers) -->
                         <div class="thumbnail-strip">
-                            <div class="thumb-item active" onclick="setSlide(0)">
-                                <img src="images/8.jpg" alt="Bedroom">
-                            </div>
-                            <div class="thumb-item" onclick="setSlide(1)">
-                                <img src="images/3.jpg" alt="Bedroom 2">
-                            </div>
-                            <div class="thumb-item" onclick="setSlide(2)">
-                                <img src="images/1.jpg" alt="Bathroom">
-                            </div>
-                            <div class="thumb-item" onclick="setSlide(3)">
-                                <img src="images/6.jpg" alt="Bathroom 2">
-                            </div>
-                            <div class="thumb-item" onclick="setSlide(4)">
-                                <img src="images/4.jpg" alt="Kitchen">
-                            </div>
-                            <div class="thumb-item" onclick="setSlide(5)">
-                                <img src="images/gallery vid.png" alt="Video Tour">
-                            </div>
-                            <div class="thumb-item" onclick="setSlide(6)">
-                                <img src="images/gallery 360.png" alt="360 Tour">
-                            </div>
+                            <button type="button" class="thumb-item active" data-src="images/8.jpg" data-alt="Bedroom" aria-label="Show photo 1: Bedroom" aria-current="true"><img src="images/8.jpg" alt=""></button>
+                            <button type="button" class="thumb-item" data-src="images/3.jpg" data-alt="Bedroom 2" aria-label="Show photo 2: Bedroom 2" aria-current="false"><img src="images/3.jpg" alt=""></button>
+                            <button type="button" class="thumb-item" data-src="images/1.jpg" data-alt="Bathroom" aria-label="Show photo 3: Bathroom" aria-current="false"><img src="images/1.jpg" alt=""></button>
+                            <button type="button" class="thumb-item" data-src="images/6.jpg" data-alt="Bathroom 2" aria-label="Show photo 4: Bathroom 2" aria-current="false"><img src="images/6.jpg" alt=""></button>
+                            <button type="button" class="thumb-item" data-src="images/4.jpg" data-alt="Kitchen" aria-label="Show photo 5: Kitchen" aria-current="false"><img src="images/4.jpg" alt=""></button>
+                            <button type="button" class="thumb-item" data-src="images/gallery vid.png" data-alt="Video Tour" aria-label="Show photo 6: Video Tour" aria-current="false"><img src="images/gallery vid.png" alt=""></button>
+                            <button type="button" class="thumb-item" data-src="images/gallery 360.png" data-alt="360 Tour" aria-label="Show photo 7: 360 Tour" aria-current="false"><img src="images/gallery 360.png" alt=""></button>
                         </div>
                     </div>
 
                     <!-- Right Column: Details & Specs -->
                     <div class="properties-content">
-                        <h2 class="property-title">Loving Hills</h2>
                         <p class="property-address">12 Wilson St, Andsville</p>
 
                         <p class="property-description">
@@ -126,22 +119,23 @@
 
                         <!-- Key Amenities List -->
                         <ul class="property-features">
-                            <li>Private Pool</li>
-                            <li>Hi-Speed WiFi</li>
-                            <li>Gourmet Kitchen</li>
-                            <li>Dedicated Workspace</li>
+                            <li>Air-Conditiong</li>
+                            <li>Smoke Alarm</li>
+                            <li>Fire Extinguisher</li>
+                            <li>1 Block from Coconut Beach</li>
+                            <li>1 Block from Riverside International Restaurant & Bar</li>
                         </ul>
 
                         <!-- Specs & Pricing Row -->
                         <div class="property-meta-row">
                             <div class="property-specs">
-                                <span><i class="fa-solid fa-user"></i> 10</span>
-                                <span><i class="fa-solid fa-bed"></i> 2</span>
-                                <span><i class="fas fa-building"></i> 1000sqft</span>
-                                <span><i class="fas fa-bath"></i> 2</span>
+                                <span><i class="fa-solid fa-user" aria-hidden="true"></i> 10</span>
+                                <span><i class="fa-solid fa-bed" aria-hidden="true"></i> 2</span>
+                                <span><i class="fas fa-building" aria-hidden="true"></i> 1000sqft</span>
+                                <span><i class="fas fa-bath" aria-hidden="true"></i> 2</span>
                             </div>
                             <div class="property-price">
-                                <b>$200</b>/Night
+                                <b>$80 USD</b>/ Week Night | <b>$88 USD</b>/ Weekend Night <br><b>$800 USD</b>/ Month
                             </div>
                         </div>
                     </div>
@@ -156,9 +150,9 @@
 
                     <!-- Toggle Mode Links -->
                     <div class="calc-tabs">
-                        <button type="button" class="tab-link active" id="tab-rent" onclick="switchCalcMode('rent')">I want to Rent/Stay</button>
-                        <span class="tab-separator">|</span>
-                        <button type="button" class="tab-link" id="tab-invest" onclick="switchCalcMode('invest')">I want to Invest</button>
+                        <button type="button" class="tab-link active" id="tab-rent" aria-pressed="true" data-calc-mode="rent" aria-controls="form-rent">I want to Rent/Stay</button>
+                        <span class="tab-separator" aria-hidden="true">|</span>
+                        <button type="button" class="tab-link" id="tab-invest" aria-pressed="false" data-calc-mode="invest" aria-controls="form-invest">I want to Invest</button>
                     </div>
                 </div>
 
@@ -173,24 +167,35 @@
                                 <label for="rent-property-type">Property Type:</label>
                                 <div class="calc-select-wrapper">
                                     <select id="rent-property-type">
-                                        <option value="vacation-commercial">Vacation/Commercial</option>
+                                        <option value="commercial">Commercial</option>
                                         <option value="residential">Residential</option>
                                     </select>
                                 </div>
                             </div>
 
                             <!-- Stay Duration -->
-                            <div class="form-group">
-                                <label>Stay Duration:</label>
-                                <div class="date-inputs">
-                                    <div class="input-with-icon">
-                                        <input type="text" placeholder="Start Date:" onfocus="(this.type='date')" onblur="(this.type='text')">
-                                    </div>
-                                    <div class="input-with-icon">
-                                        <input type="text" placeholder="End Date:" onfocus="(this.type='date')" onblur="(this.type='text')">
+                                <!-- Group wrapper: named by the "Stay Duration:" heading below so screen readers announce it with each date field -->
+                                <div class="form-group" role="group" aria-labelledby="stay-label">
+                                    <!-- Visible group heading-->
+                                    <span class="form-label" id="stay-label">Stay Duration:</span>
+
+                                    <div class="date-inputs">
+
+                                        <!-- Start date: label is linked to the input via for/id -->
+                                        <div class="input-with-icon">
+                                            <label class="sub-label" for="rent-start">Start date</label>
+                                            <!-- Native date picker; id is also used by main.js to read the value -->
+                                            <input type="date" id="rent-start" name="start-date">
+                                        </div>
+
+                                        <!-- End date-->
+                                        <div class="input-with-icon">
+                                            <label class="sub-label" for="rent-end">End date</label>
+                                            <input type="date" id="rent-end" name="end-date">
+                                        </div>
+
                                     </div>
                                 </div>
-                            </div>
 
                             <!-- Occupancy -->
                             <div class="form-group">
@@ -203,25 +208,6 @@
                                         <option value="4">4 Guests</option>
                                         <option value="10">10 Guests</option>
                                     </select>
-                                </div>
-                            </div>
-
-                            <!-- Add-ons -->
-                            <div class="form-group">
-                                <label class="label-with-note">Add-ons: <span>(Optional)</span></label>
-                                <div class="checkbox-grid">
-                                    <label class="checkbox-label">
-                                        <input type="checkbox" name="addon" value="feature1"> Feature/Amenity
-                                    </label>
-                                    <label class="checkbox-label">
-                                        <input type="checkbox" name="addon" value="feature2"> Feature/Amenity
-                                    </label>
-                                    <label class="checkbox-label">
-                                        <input type="checkbox" name="addon" value="feature3"> Feature/Amenity
-                                    </label>
-                                    <label class="checkbox-label">
-                                        <input type="checkbox" name="addon" value="feature4"> Feature/Amenity
-                                    </label>
                                 </div>
                             </div>
 
@@ -244,7 +230,7 @@
                                 <label for="invest-strategy">Investment Strategy:</label>
                                 <div class="calc-select-wrapper">
                                     <select id="invest-strategy">
-                                        <option value="vacation-commercial">Vacation/Commercial</option>
+                                        <option value="commercial">Commercial</option>
                                         <option value="residential">Residential</option>
                                     </select>
                                 </div>
@@ -270,28 +256,27 @@
                     </div>
 
                     <!-- Right Side: Total Output Display Card -->
-                     <div class="calc-receipt">
+                     <div class="calc-receipt" role="region" aria-label="Calculation results" aria-live="polite">
                         <!-- Rent Total Heading (Visible by default) -->
                         <h3 class="total-title" id="title-rent">Estimated Total = <span id="total-amount-rent">$274</span></h3>
                         
                         <!-- Invest Total Heading (Hidden by default) -->
-                        <h3 class="total-title" id="title-invest" style="display: none;">Estimated Total = <span id="total-amount-invest">$10,850</span></h3>
+                        <h3 class="total-title" id="title-invest" style="display: none;">Estimated Total = <span id="total-amount-invest">$0</span></h3>
                         
                         <!-- Rent Breakdown (Active) -->
                         <div id="breakdown-rent" class="breakdown-list active">
-                            <div class="breakdown-item"><span>Base Rate (1 night) =</span> <b>$200</b></div>
-                            <div class="breakdown-item"><span>Cleaning & Maintenance Fee =</span> <b>$45</b></div>
-                            <div class="breakdown-item"><span>Taxes & Fees =</span> <b>$29</b></div>
+                            <div class="breakdown-item"><span>Base Rate (1 night) =</span> <b>$80</b></div>
+                            <div class="breakdown-item"><span>Services Fees =</span> <b>15%</b></div>
                         </div>
 
                         <!-- Invest Breakdown -->
                         <div id="breakdown-invest" class="breakdown-list">
-                            <div class="breakdown-item"><span>Initial Capital =</span> <b>$10,000</b></div>
+                            <div class="breakdown-item"><span>Initial Capital =</span> <b>$0</b></div>
                             <div class="breakdown-item"><span>Target Annual Yield (8.5%) =</span> <b>$850/yr</b></div>
                             <div class="breakdown-item"><span>Holding Duration =</span> <b>1 Year</b></div>
                             <div class="breakdown-item"><span>Estimated Net Profit =</span> <b>$850</b></div>
                             
-                            <a href="#" class="btn-prospectus">Request Full Prospectus</a>
+                            <a href="Invest.html#form" class="btn-prospectus">Request Full Prospectus</a>
                         </div>
                      </div>
 
@@ -317,22 +302,22 @@
                         <img src="images/placeholder logo.png" alt="Aumnia Group Inc. Logo" class="footer-logo">
                         <div class="brand-text">
                             <h2 class="company-name">Aumnia Group Inc</h2>
-                            <p class="company-address">34 Downsville Avenue, Hayan</p>
+                            <p class="company-address">Lizard Trail, Picard • Portsmouth, Dominica</p>
                         </div>
                     </div>
 
                     <!-- Contact Us Column -->
                     <div class="footer-column">
                         <h3 class="contact">Contact Us</h3>
-                        <p>(767)612-2411</p>
+                        <p><a href="tel:(767)612-2411">(767)612-2411</a></p>
                         <p><a href="mailto:lilianpiperapartments@gmail.com">lilianpiperapartments@gmail.com</a></p>
                     </div>
 
                     <!-- Questions Column -->
                     <div class="footer-column">
                         <h3>Questions?</h3>
-                        <p><a href="#" onclick="openFaqModal(event)">FAQs</a></p>
-                        <p><a href="https://www.google.com/maps/place/Dominica/data=!4m2!3m1!1s0x8c14d2faf2155a15:0x49b39109053afd3c?sa=X&ved=1t:242&ictx=111" target="_blank" rel="noopener noreferrer">View map</a></p>
+                        <p><button type="button" class="link-button" data-faq-open aria-haspopup="dialog">FAQs</button></p>
+                        <p><a href="https://www.google.com/maps/place/Lizard+Trail,+Portsmouth,+Dominica/@15.5593687,-61.4610439,17z/data=!3m1!4b1!4m6!3m5!1s0x8c14c9258487f653:0xf32f117955196877!8m2!3d15.5593635!4d-61.458469!16s%2Fg%2F1tfcd6mq?entry=ttu&g_ep=EgoyMDI2MDkyNy4wIKXMDSoASAFQAw%3D%3D" target="_blank" rel="noopener noreferrer">View map</a></p>
                     </div>
 
                 </div>
@@ -354,16 +339,16 @@
 
             <!-- FAQ Modal -->
              <div id="faq-modal" class="modal-overlay">
-                <div class="modal-card">
-                    <button type="button" class="modal-close" onclick="closeFaqModal()">&times;</button>
+                <div class="modal-card" role="dialog" aria-modal="true" aria-labelledby="faq-title" tabindex="-1">
+                    <button type="button" class="modal-close" data-faq-close aria-label="Close dialog"><span aria-hidden="true">&times;</span></button>
                     <div class="modal-icon modal-icon-info">
-                        <i class="fa-solid fa-circle-question"></i>
+                        <i class="fa-solid fa-circle-question" aria-hidden="true"></i>
                     </div>
-                    <h2>Frequently Asked Questions</h2>
+                    <h2 id="faq-title">Frequently Asked Questions</h2>
                     <p>We are currently compiling our most frequently asked questions. If you have an immediate inquiry, please reach out to our team.</p>
                     <div class="modal-actions">
-                        <a href="contact.html" class="btn-primary-modal">Go to Contact</a>
-                        <button type="button" class="btn-secondary-modal" onclick="closeFaqModal()">Close</button>
+                        <a href="Contact.html" class="btn-primary-modal">Go to Contact</a>
+                        <button type="button" class="btn-secondary-modal" data-faq-close>Close</button>
                     </div>
                 </div>
              </div>

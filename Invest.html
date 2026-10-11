@@ -23,7 +23,11 @@
         </head>
 
         <body class="invest-page">
+            <!-- allows screen readers to skip through navigation links-->
+            <a class="skip-link" href="#main">Skip to main content</a>
+
             <!-- Header Section Starts-->
+            <header>
              <div class="hero">
                 <nav>
                     <div class="left-side">
@@ -49,8 +53,8 @@
                             </ul>
                         </div>
                         <div class="social-icons">
-                            <a href="https://www.tiktok.com/@aumnia.group.inc" class="fab fa-tiktok"></a>
-                            <a href="mailto:lilianpiperapartments@gmail.com" class="fas fa-envelope-open"></a>
+                            <a href="https://www.tiktok.com/@aumnia.group.inc" target="_blank" rel="noopener noreferrer" aria-label="Aumnia Group Inc. on TikTok (opens in a new tab)"><i class="fab fa-tiktok" aria-hidden="true"></i></a>
+                            <a href="mailto:lilianpiperapartments@gmail.com" aria-label="Email Aumnia Group Inc."><i class="fas fa-envelope-open" aria-hidden="true"></i></a>
                         </div>
                     </div>
                 </nav>
@@ -61,10 +65,12 @@
              </div>
 
              <div class="contact-block">
-                <h3>Location: 34 Downsville Avenue, Hayan | Email: <a href="mailto:lilianpiperapartments@gmail.com">lilianpiperapartments@gmail.com</a> | Call Us: (767)612-2411</h3>
+                <h3>Location: Lizard Trail, Picard • Portsmouth, Dominica | Email: <a href="mailto:lilianpiperapartments@gmail.com">lilianpiperapartments@gmail.com</a> | Call Us: <a href="tel:(767)612-2411">(767)612-2411</a></h3>
              </div>
+            </header>
             <!-- Header Section Ends-->
 
+            <main id="main">
             <!-- Vid Section Starts-->
              <div class="invest-vid">
                 <img src="images/invest vid.png" height="400">
@@ -138,13 +144,12 @@
                 <div class="properties-container">
                     <!-- Left Column: Asset Media Brief -->
                     <div class="properties-image">
-                        <img src="images/blueprint 2.jpeg" height="400" width="600">
+                        <img src="images/8.jpg" height="400" width="600">
                     </div>
 
                     <!-- Right Column: Investor Asset Metrics -->
                     <div class="properties-content">
-                        <h2 class="property-title">Loving Hills</h2>
-                        <p class="property-address">34 Downsville Avenue, Hayan — <i>Model Benchmark Asset</i></p>
+                        <p class="property-address">Lizard Trail, Picard • Portsmouth, Dominica — <i>Model Benchmark Asset</i></p>
 
                         <p class="property-description">
                             Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque mattis euismod justo in 
@@ -163,17 +168,17 @@
                         <!-- Asset Financial Meta Row -->
                         <div class="property-meta-row">
                             <div class="property-specs">
-                                <span><i class="fa-solid fa-chart-line"></i> 18.2% Projected ROI</span>
-                                <span><i class="fas fa-building"></i> 1,000 sq ft</span>
-                            </div>
+                                <span><i class="fa-solid fa-chart-line" aria-hidden="true"></i> 18.2% Projected ROI</span>
+                                <span><i class="fas fa-building" aria-hidden="true"></i> 1,000 sq ft</span>
+                            </div><br>
                             <div class="property-price">
-                                <b>$200</b>/Night Base Rev
+                                <b>$80 USD</b>/ Week Night<br> <b>$88 USD</b>/ Weekend Night <br><b>$800 USD</b>/ Month
                             </div>
                         </div>
 
                         <!-- Investor Actions -->
                         <div class="property-actions">
-                            <a href="properties.html" class="btn-primary">View Full Property Tour & Specs</a>
+                            <a href="properties.html" class="btn-primary">View Full Property Tour</a>
                             <a href="#invest-calc-section" class="calc-link" onclick="toggleInvestCalculator(event)">
                                 <i class="fas fa-calculator"></i> Model Returns on ROI Calculator
                             </a>
@@ -202,7 +207,7 @@
                                 <label for="invest-strategy-page">Investment Strategy:</label>
                                 <div class="calc-select-wrapper">
                                     <select id="invest-strategy-page">
-                                        <option value="vacation-commercial">Vacation/Commercial</option>
+                                        <option value="commercial">Commercial</option>
                                         <option value="residential">Residential</option>
                                     </select>
                                 </div>
@@ -227,7 +232,7 @@
                     </div>
 
                     <!-- Right Side: Total Output Display Card -->
-                    <div class="calc-receipt">
+                    <div class="calc-receipt" role="region" aria-label="Calculation results" aria-live="polite">
                         <h3 class="total-title">Estimated Total = <span id="total-amount-invest">$10,850</span></h3>
                         
                         <div id="breakdown-invest-page" class="breakdown-list active">
@@ -288,32 +293,32 @@
                     Interested in partnering with us or have any further questions? Complete the inquiry below to connect with
                     our team
                 </p>
-
+ 
                 <form class="contact-form" action="#" method="POST"> <!-- same purpose as form in contact page-->
                     <!-- Name Field -->
                     <div class="form-group">
                         <label for="name">Name: <span class="required">(*required*)</span></label>
-                        <input type="text" id="name" name="name" required>
+                        <input type="text" id="name" name="name" autocomplete="name" required>
                     </div>
-
+ 
                     <!-- Email Field -->
                     <div class="form-group">
                         <label for="email">Email Address: <span class="required">(*required*)</span></label>
-                        <input type="email" id="email" name="email" required>
+                        <input type="email" id="email" name="email" autocomplete="email" required>
                     </div>
-
+ 
                     <!-- Phone Field -->
                     <div class="form-group">
                         <label for="phone">Phone Number:</label>
-                        <input type="tel" id="phone" name="phone">
+                        <input type="tel" id="phone" name="phone" autocomplete="tel">
                     </div>
-
+ 
                     <!-- Company Name Field -->
                     <div class="form-group">
                         <label for="company-name">Company Name: <span class="required">(*required*)</span></label>
-                        <input type="text" id="company-name" name="company-name" required>
+                        <input type="text" id="company-name" name="company-name" autocomplete="organization" required>
                     </div>
-
+ 
                     <!-- Select Capital Field -->
                     <div class="form-group">
                         <label for="capital">Estimated Investment Capital: <span class="required">(*required*)</span></label>
@@ -329,10 +334,10 @@
                             </select>
                         </div>
                     </div>
-
+ 
                     <!-- Select Timeline Field -->
                     <div class="form-group">
-                        <label for="capital">Desired Investment Timeline: <span class="required">(*required*)</span></label>
+                        <label for="timeline">Desired Investment Timeline: <span class="required">(*required*)</span></label>
                         <div class="select-wrapper">
                             <select id="timeline" name="timeline" required>
                                 <option value="" disabled selected hidden>Select Timeline</option>
@@ -344,15 +349,16 @@
                             </select>
                         </div>
                     </div>
-
+ 
                     <!-- Message Field -->
                     <div class="form-group">
                         <label for="message">Investment Goals/Specific Questions: <span class="required">(*required*)</span></label>
                         <textarea id="message" name="message" rows="6" required></textarea>
                     </div>
-
+ 
                     <!-- Submit Button -->
                     <button type="submit" class="submit-btn">Submit Form</button>
+                    <p id="formStatus" class="form-status" role="status" aria-live="polite"></p>
                 </form>
              </section>
             <!-- Form Section Ends-->
@@ -361,6 +367,8 @@
              <p class="notice">Want to learn more about our business? Visit our, <a href="About.html">About Us</a>, 
                 <a href="Contact.html">Contact page</a>, and <a href="Properties.html">Properties page</a> for more information</p>
             <!-- Notice Section Ends-->
+
+            </main>
 
             <!-- Footer Section Starts-->
              <footer class="site-footer">
@@ -372,22 +380,22 @@
                         <img src="images/placeholder logo.png" alt="Aumnia Group Inc. Logo" class="footer-logo">
                         <div class="brand-text">
                             <h2 class="company-name">Aumnia Group Inc</h2>
-                            <p class="company-address">34 Downsville Avenue, Hayan</p>
+                            <p class="company-address">Lizard Trail, Picard • Portsmouth, Dominica</p>
                         </div>
                     </div>
 
                     <!-- Contact Us Column -->
                     <div class="footer-column">
                         <h3 class="contact">Contact Us</h3>
-                        <p>(767)612-2411</p>
+                        <p><a href="tel:(767)612-2411">(767)612-2411</a></p>
                         <p><a href="mailto:lilianpiperapartments@gmail.com">lilianpiperapartments@gmail.com</a></p>
                     </div>
 
                     <!-- Questions Column -->
                     <div class="footer-column">
                         <h3>Questions?</h3>
-                        <p><a href="#" onclick="openFaqModal(event)">FAQs</a></p>
-                        <p><a href="https://www.google.com/maps/place/Dominica/data=!4m2!3m1!1s0x8c14d2faf2155a15:0x49b39109053afd3c?sa=X&ved=1t:242&ictx=111" target="_blank" rel="noopener noreferrer">View map</a></p>
+                        <p><button type="button" class="link-button" data-faq-open aria-haspopup="dialog">FAQs</button></p>
+                        <p><a href="https://www.google.com/maps/place/Lizard+Trail,+Portsmouth,+Dominica/@15.5593687,-61.4610439,17z/data=!3m1!4b1!4m6!3m5!1s0x8c14c9258487f653:0xf32f117955196877!8m2!3d15.5593635!4d-61.458469!16s%2Fg%2F1tfcd6mq?entry=ttu&g_ep=EgoyMDI2MDkyNy4wIKXMDSoASAFQAw%3D%3D" target="_blank" rel="noopener noreferrer">View map</a></p>
                     </div>
 
                 </div>
@@ -422,16 +430,16 @@
 
             <!-- FAQ Modal -->
              <div id="faq-modal" class="modal-overlay">
-                <div class="modal-card">
-                    <button type="button" class="modal-close" onclick="closeFaqModal()">&times;</button>
+                <div class="modal-card" role="dialog" aria-modal="true" aria-labelledby="faq-title" tabindex="-1">
+                    <button type="button" class="modal-close" data-faq-close aria-label="Close dialog"><span aria-hidden="true">&times;</span></button>
                     <div class="modal-icon modal-icon-info">
-                        <i class="fa-solid fa-circle-question"></i>
+                        <i class="fa-solid fa-circle-question" aria-hidden="true"></i>
                     </div>
-                    <h2>Frequently Asked Questions</h2>
+                    <h2 id="faq-title">Frequently Asked Questions</h2>
                     <p>We are currently compiling our most frequently asked questions. If you have an immediate inquiry, please reach out to our team.</p>
                     <div class="modal-actions">
-                        <a href="contact.html" class="btn-primary-modal">Go to Contact</a>
-                        <button type="button" class="btn-secondary-modal" onclick="closeFaqModal()">Close</button>
+                        <a href="Contact.html" class="btn-primary-modal">Go to Contact</a>
+                        <button type="button" class="btn-secondary-modal" data-faq-close>Close</button>
                     </div>
                 </div>
              </div>

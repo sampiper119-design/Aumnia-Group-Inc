@@ -8,13 +8,18 @@
 
 :root {
     --primary-color: #008080;
-    --secondary-color: #009B77;
+    --secondary-color: #007A5E;
     --accent-color: #E6AC00;
     --border-color: #C79A12;
     --bg-color: rgb(242, 232, 211, 0.12);
     --text-color: #333;
     --solidBgText-color: #FFF;
     --accentText-color: #555;
+
+    --primary-dark: #006666;
+    --btnText-color: #1f1f1f;
+    --focus-color: #1f1f1f;
+    --gutter: clamp(1.25rem, 5vw, 5rem);
 
     --font-heading: 'Inder', sans-serif;
     --font-body: 'Poppins', sans-serif;
@@ -23,7 +28,7 @@
 
 html, body {
     font-family: var(--font-body);
-    font-size: 16px;
+    font-size: 1rem;
     color: var(--text-color);
     line-height: 1.5;
 	overflow-x: hidden;
@@ -39,7 +44,7 @@ img {
 .hero {
     position: relative;
     height: 444px;
-    background: url('../images/property.png') no-repeat center center/cover;
+    background: url('../images/thumbnail.png') no-repeat center center/cover;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -47,7 +52,7 @@ img {
 
 .page-header {
       text-align: left;
-      margin-left: 50px;
+      margin-left: 3.125rem;
       position: absolute;
       top: 65%;
 	  width: 100%;
@@ -58,7 +63,7 @@ img {
 
 .page-header h1 {
     font-family: var(--font-heading);
-    font-size: 32px;
+    font-size: 2rem;
     font-weight: 600;
     letter-spacing: 2px;
     line-height: 1.2;
@@ -66,17 +71,17 @@ img {
 
 .page-header h2 {
     font-family: var(--font-body);
-    font-size: 22px;
+    font-size: 1.375rem;
     font-weight: 500;
 }
 
 /* Contact block */
 .contact-block {
-    padding: 8px;
+    padding: 0.5rem;
     width: 100%;
     background-color: var(--secondary-color);
     color: var(--solidBgText-color);
-    font-size: 13px;
+    font-size: 0.81rem;
     text-align: center;
 }
 
@@ -100,14 +105,14 @@ img {
 
 /* ------------------ Navigation Bar -------------------------------- */
 nav {
-    background-color: var(--primary-color);
+    background-color: var(--primary-dark);
     border-bottom: 2px solid var(--secondary-color);
     color: var(--solidBgText-color);
 
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 2px 60px;
+    padding: 2px 3.75rem;
     position: relative;
     width: 100%;
     z-index: 10;
@@ -116,11 +121,11 @@ nav {
 nav .left-side {
     display: flex;
     align-items: center;
-    gap: 15px;
+    gap: 0.94rem;
 }
 
 nav .logo img {
-    height: 40px; /* Adjust height to match your Figma mockup */
+    height: 2.5rem; /* Adjust height to match your Figma mockup */
     width: auto;
     display: block;
 }
@@ -128,14 +133,14 @@ nav .logo img {
 nav h1 {
     font-family: var(--font-title);
     font-weight: 400;
-    font-size: 25px;
-    padding-top: 5px;
+    font-size: 1.56rem;
+    padding-top: 0.31rem;
 }
 
 nav .right-side {
     display: flex;
     align-items: center;
-    gap: 30px;
+    gap: 1.875rem;
 }
 
 .nav-links {
@@ -146,7 +151,7 @@ nav .right-side {
 nav ul {
     list-style: none;
     display: flex;
-    gap: 20px;
+    gap: 1.25rem;
     margin: 0;
     padding: 0;
 }
@@ -158,7 +163,7 @@ nav ul li {
 nav ul li a {
     color: var(--solidBgText-color);
     text-decoration: none;
-    font-size: 15px;
+    font-size: 0.94rem;
 }
 
 nav .active {
@@ -172,13 +177,13 @@ nav ul li a:hover {
 
 .social-icons {
     display: flex;
-    gap: 14px;
+    gap: 0.875rem;
 }
 
 .social-icons a {
     color: var(--solidBgText-color);
     text-decoration: none;
-    font-size: 18px;
+    font-size: 1.125rem;
 }
 
 /* Hamburger Toggle Button (hidden on desktop) */
@@ -187,7 +192,7 @@ nav ul li a:hover {
     flex-direction: column;
     justify-content: space-between;
     width: 26px;
-    height: 18px;
+    height: 1.125rem;
     background: transparent;
     border: none;
     padding: 0;
@@ -220,7 +225,7 @@ nav ul li a:hover {
 .vid-container {
     max-width: 75%; /* Constrains content width on large desktop screens */
     margin: 0 auto;    /* Centers the container horizontally on the page */
-    padding: 80px 40px; /* Provides consistent spacing around the section */
+    padding: 5rem 2.5rem; /* Provides consistent spacing around the section */
 }
 
 /* Ensure floated elements clear inside the container */
@@ -236,25 +241,25 @@ nav ul li a:hover {
     max-width: 100%;
     aspect-ratio: 330 / 290;
     object-fit: cover;
-    margin-right: 40px;
+    margin-right: 2.5rem;
     
 }
 
 .vid-container h1 {
     color: var(--primary-color);
     font-family: var(--font-heading);
-    font-size: 26px;
-    margin-bottom: 10px;
+    font-size: 1.625rem;
+    margin-bottom: 0.625rem;
 }
 
 .vid-container p {
-    font-size: 16px;
+    font-size: 1rem;
     line-height: 1.7;
 }
 
 /* ------------------ Services Style Settings ------------------ */
 .services-section {
-    padding: 30px 80px;
+    padding: 1.875rem 5rem;
     background-color: var(--bg-color);
 }
 
@@ -264,7 +269,7 @@ nav ul li a:hover {
     margin: 0 auto;
     display: flex;
     align-items: stretch;
-    gap: 50px;
+    gap: 3.125rem;
 }
 
 .services-content {
@@ -275,22 +280,22 @@ nav ul li a:hover {
 .services-section h1 {
     font-family: var(--font-heading);
     color: var(--primary-color);
-    font-size: 26px;
-    margin-bottom: 30px;
+    font-size: 1.625rem;
+    margin-bottom: 1.875rem;
 }
 
 /* 2x2 Grid for Service Cards */
 .services-grid {
     display: grid;
     grid-template-columns: repeat(2, 1fr); /* 2 columns */
-    gap: 30px 0px; /* Row gap 30px, Column gap 20px */
+    gap: 1.875rem 0px; /* Row gap 1.875rem, Column gap 1.25rem */
 }
 
 /* Individual Service Card Component */
 .service-card {
     display: flex;
     align-items: flex-start;
-    gap: 15px;
+    gap: 0.94rem;
 }
 
 /* Service Icon */
@@ -301,27 +306,27 @@ nav ul li a:hover {
 
 /* Card Heading & Text */
 .service-info {
-    padding-top: 10px;
+    padding-top: 0.625rem;
 }
 
 .service-info h3 {
     font-family: var(--font-heading);
     color: var(--secondary-color); /* Teal highlight */
-    font-size: 20px;
+    font-size: 1.25rem;
     font-weight: 600;
-    margin-bottom: 6px;
+    margin-bottom: 0.375rem;
 }
 
 .service-info p {
     color: var(--accentText-color);
-    font-size: 14px;
+    font-size: 0.875rem;
     line-height: 1.4;
 }
 
 /* Right Side Image Block */
 .services-image {
     width: 40%;
-    padding-top: 10px;
+    padding-top: 0.625rem;
 }
 
 .services-image img {
@@ -351,21 +356,21 @@ nav ul li a:hover {
 
 /* -------------------- Properties Style Settings -------------------- */
 .properties-section {
-    padding: 40px 80px;
-    margin-top: 40px;
+    padding: 2.5rem 5rem;
+    margin-top: 2.5rem;
 }
 
 .properties-section h1 {
     font-family: var(--font-heading);
     color: var(--primary-color);
-    font-size: 26px;
-    margin-bottom: 24px;
+    font-size: 1.625rem;
+    margin-bottom: 1.5rem;
 }
 
 .properties-container {
     display: flex;
     align-items: center;
-    gap: 10px;
+    gap: 0.625rem;
     max-width: 100%;
 }
 
@@ -391,23 +396,23 @@ nav ul li a:hover {
 
 .property-title {
     font-family: var(--font-heading);
-    font-size: 28px;
+    font-size: 1.75rem;
     color: var(--primary-color);
     margin-bottom: 4px;
 }
 
 .property-address {
     font-family: var(--font-heading);
-    font-size: 16px;
+    font-size: 1rem;
     font-weight: 700;
     color: var(--secondary-color);
-    margin-bottom: 16px;
+    margin-bottom: 1rem;
 }
 
 .property-description {
-    font-size: 16px;
+    font-size: 1rem;
     line-height: 1.5;
-    margin-bottom: 20px;
+    margin-bottom: 1.25rem;
     width: 90%;
 }
 
@@ -415,15 +420,15 @@ nav ul li a:hover {
 .property-features {
     list-style: none;
     padding: 0;
-    margin: 0 0 20px 0;
+    margin: 0 0 1.25rem 0;
     display: grid;
     grid-template-columns: repeat(2, 0.5fr);
-    gap: 10px 10px;
+    gap: 0.625rem 0.625rem;
     width: 80%;
 }
 
 .property-features li {
-    font-size: 16px;
+    font-size: 1rem;
     font-weight: 600;
     display: flex;
     align-items: center;
@@ -432,7 +437,7 @@ nav ul li a:hover {
 .property-features li::before {
     content: "•";
     color: var(--accent-color);
-    font-size: 28px;
+    font-size: 1.75rem;
     margin-right: 4px;
 }
 
@@ -441,25 +446,27 @@ nav ul li a:hover {
     display: flex;
     align-items: center;
     justify-content: space-between; /* Pushes specs left and price right */
-    width: 57%;
-    margin-bottom: 24px;
-    padding-left: 5px;
+    width: 90%;
+    margin-bottom: 1.5rem;
+    padding-left: 0.31rem;
 }
 
 .property-specs {
     display: flex;
     align-items: center;
-    gap: 14px;
-    font-size: 14px;
+    gap: 0.875rem;
+    font-size: 0.875rem;
     color: #444;
 }
 
 .property-price {
-    font-size: 18px;
+    text-align: right;
+    font-size: 1rem;
+    padding-top: 1.8rem;
 }
 
 .property-price b {
-    font-size: 20px;
+    font-size: 1.125rem;
     font-weight: 600;
 }
 
@@ -468,15 +475,15 @@ nav ul li a:hover {
     display: flex;
     flex-direction: column;
     align-items: flex-start;
-    gap: 12px;
+    gap: 0.75rem;
 }
 
 .property-actions .btn-primary {
     display: block;
     color: var(--solidBgText-color);
     font-family: var(--font-heading);
-    font-size: 18px;
-    padding: 8px 34px;
+    font-size: 1.125rem;
+    padding: 0.5rem 2.125rem;
     width: fit-content;
     margin: 0;
     background-color: var(--accent-color);
@@ -490,7 +497,7 @@ nav ul li a:hover {
 }
 
 .calc-link {
-    font-size: 13.5px;
+    font-size: 0.84rempx;
     color: var(--primary-color);
     text-decoration: none;
 }
@@ -508,7 +515,7 @@ nav ul li a:hover {
 @media (max-width: 820px) {
     .properties-container {
         flex-direction: column;
-        gap: 24px;
+        gap: 1.5rem;
     }
 
     .properties-image,
@@ -521,7 +528,7 @@ nav ul li a:hover {
 /* ----------------------- Horizontal Break Style Settings --------------------- */
 hr.break {
     max-width: 90%;
-    padding: 30px 40px 40px;
+    padding: 1.875rem 2.5rem 2.5rem;
     margin: 0px auto;
     border: none;
     border-top: 1px solid #989;
@@ -530,32 +537,32 @@ hr.break {
 
 /* ------------------------ Invest Section Style Settings ---------------------------- */
 .invest-section {
-    padding: 0px 80px;
+    padding: 0px 5rem;
 }
 
 .invest-section h1 {
     font-family: var(--font-heading);
     color: var(--primary-color);
-    font-size: 26px;
-    margin-bottom: 30px;
+    font-size: 1.625rem;
+    margin-bottom: 1.875rem;
 }
 
 .invest-section p {
     width: 96%;
     margin: 0px auto;
     background-color: rgb(242, 232, 211, 0.3);
-    padding: 30px;
+    padding: 1.875rem;
     line-height: 1.7;
 }
 
 .invest-section .btn {
     color: var(--solidBgText-color);
     font-family: var(--font-heading);
-    font-size: 20px;
-    padding: 10px 42px;
+    font-size: 1.25rem;
+    padding: 0.625rem 2.625rem;
     display: block;
     width: fit-content;
-    margin: 50px auto 80px;
+    margin: 3.125rem auto 5rem;
     background-color: var(--accent-color);
     border: 1px solid var(--border-color);
     text-decoration: none;
@@ -569,9 +576,9 @@ hr.break {
 /* ------------------ Footer Style Settings ------------------ */
 
 .site-footer {
-    background-color: var(--primary-color);
+    background-color: var(--primary-dark);
     color: var(--solidBgText-color);
-    padding: 30px 80px 15px;
+    padding: 1.875rem 5rem 0.94rem;
 }
 
 /* Top Section Layout */
@@ -581,14 +588,14 @@ hr.break {
     align-items: flex-start;
     max-width: 80%;
     margin: 0px auto;
-    padding-bottom: 30px;
+    padding-bottom: 1.875rem;
 }
 
 /* Branding & Address */
 .footer-brand {
     display: flex;
     align-items: center;
-    gap: 20px;
+    gap: 1.25rem;
 }
 
 .footer-logo {
@@ -599,30 +606,30 @@ hr.break {
 
 .footer-brand .company-name {
     font-family: var(--font-title);
-    font-size: 32px;
+    font-size: 2rem;
     font-weight: 400;
     line-height: 1;
-    padding-top: 10px;
+    padding-top: 0.625rem;
 }
 
 .footer-brand .company-address {
     font-family: var(--font-body);
-    font-size: 16px;
+    font-size: 1rem;
     font-weight: 600;
 }
 
 /* Columns for Contact & Questions */
 .footer-column h3 {
     font-family: var(--font-heading);
-    font-size: 20px;
+    font-size: 1.25rem;
     font-weight: 600;
-    margin-bottom: 8px;
+    margin-bottom: 0.5rem;
     text-align: center;
 }
 
 .footer-column p, 
 .footer-column a {
-    font-size: 15px;
+    font-size: 0.94rem;
     color: var(--solidBgText-color);
     text-decoration: none;
     line-height: 1.6;
@@ -636,11 +643,11 @@ hr.break {
 /* Bottom Bar Divider & Flex Layout */
 .footer-bottom {
     border-top: 1px solid rgba(255, 255, 255, 0.25); /* Subtle white dividing line */
-    padding-top: 16px;
+    padding-top: 1rem;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    font-size: 14px;
+    font-size: 0.875rem;
     font-weight: 600;
 }
 
@@ -657,13 +664,13 @@ hr.break {
 /* Social Icons */
 .footer-socials {
     display: flex;
-    gap: 16px;
+    gap: 1rem;
 }
 
 .footer-socials a {
     color: var(--solidBgText-color);
     text-decoration: none;
-    font-size: 18px;
+    font-size: 1.125rem;
     transition: color 0.2s ease;
 }
 
@@ -675,18 +682,18 @@ hr.break {
 
 @media (max-width: 768px) {
     .site-footer {
-        padding: 30px 20px 15px 20px;
+        padding: 1.875rem 1.25rem 0.94rem 1.25rem;
     }
 
     .footer-top {
         flex-direction: column;
         align-items: flex-start;
-        gap: 25px;
+        gap: 1.56rem;
     }
 
     .footer-bottom {
         flex-direction: column;
-        gap: 15px;
+        gap: 0.94rem;
         text-align: center;
     }
 }
@@ -702,7 +709,7 @@ hr.break {
 }
 
 .about-page .page-header h1 {
-    font-size: 36px;
+    font-size: 2.25rem;
 }
 
 .about-page .break {
@@ -712,22 +719,22 @@ hr.break {
 /* ----------------------- Mission & Value Style Settings ----------------------- */
 .mission-section {
     background-color: var(--bg-color);
-    padding: 30px 80px 50px;
+    padding: 1.875rem 5rem 3.125rem;
 }
 
 .mission-container {
     display: flex;
     align-items: flex-start; /* Aligns top edges of list and image */
     justify-content: space-between;
-    gap: 50px; /* Space between list and image */
+    gap: 3.125rem; /* Space between list and image */
     width: 100%;
 }
 
 .mission-section h1 {
     color: var(--primary-color);
     font-family: var(--font-heading);
-    font-size: 26px;
-    margin-bottom: 25px;
+    font-size: 1.625rem;
+    margin-bottom: 1.56rem;
 }
 
 .missions {
@@ -735,13 +742,13 @@ hr.break {
 }
 
 .missions ul {
-    padding-left: 20px;
+    padding-left: 1.25rem;
     list-style-type: none;
 }
 
 .missions li {
-    margin-bottom: 20px;  
-    padding-left: 20px;  
+    margin-bottom: 1.25rem;  
+    padding-left: 1.25rem;  
     position: relative;
 }
 
@@ -753,7 +760,7 @@ hr.break {
     color: var(--accent-color);
     font-family: var(--font-body);
     font-weight: 900;
-    font-size: 28px;
+    font-size: 1.75rem;
     line-height: 1;
 }
 
@@ -764,7 +771,7 @@ hr.break {
 .mission-image img {
     display: block;
     border-radius: 4px;
-    padding-top: 10px;
+    padding-top: 0.625rem;
     aspect-ratio: 400 / 300;
     cursor: default;
     user-select: none;
@@ -772,7 +779,7 @@ hr.break {
 
 /* -------------------------- Quote Style Settings ----------------------- */
 .quote-section {
-    padding: 50px 80px;
+    padding: 3.125rem 5rem;
 }
 
 .quote-container {
@@ -781,7 +788,7 @@ hr.break {
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 40px;
+    gap: 2.5rem;
 }
 
 .quote-img {
@@ -794,29 +801,29 @@ hr.break {
 .quote-content {
     display: flex;
     flex-direction: column;
-    gap: 24px;
+    gap: 1.5rem;
     max-width: 40%;
     margin: 0;
 }
 
 .quote {
     font-family: var(--font-heading);
-    font-size: 26px;
+    font-size: 1.625rem;
     line-height: 1.4;
 }
 
 .quote-btns {
     display: flex;
     align-items: center;
-    gap: 20px;
+    gap: 1.25rem;
 }
 
 .quote-btns a {
     display: block;
     color: var(--solidBgText-color);
     font-family: var(--font-heading);
-    font-size: 18px;
-    padding: 8px 34px;
+    font-size: 1.125rem;
+    padding: 0.5rem 2.125rem;
     width: fit-content;
     margin: 0;
     background-color: var(--accent-color);
@@ -831,7 +838,7 @@ hr.break {
 
 /* ----------------- Notice Style Settings ------------------------ */
 .notice {
-    padding: 30px 0px 80px;
+    padding: 1.875rem 0px 5rem;
     text-align: center;
     font-size: 16.5px;
     font-weight: 500;
@@ -860,7 +867,7 @@ hr.break {
 }
 
 .contact-page .page-header h1 {
-    font-size: 36px;
+    font-size: 2.25rem;
 }
 
 .contact-page .break {
@@ -872,10 +879,10 @@ hr.break {
 .contact-page .vid-container {
     display: flex;
     align-items: center; /* Vertically centers headshot and text */
-    gap: 36px;
-    padding: 30px 0px;
+    gap: 2.25rem;
+    padding: 1.875rem 0px;
     width: 50%;
-    margin: 40px auto;
+    margin: 2.5rem auto;
 }
 
 .contact-page .vid-container img {
@@ -886,16 +893,16 @@ hr.break {
 .contact-page .vid-container .info-content {
     display: flex;
     flex-direction: column;
-    gap: 8px;
+    gap: 0.5rem;
 }
 
 .contact-page .vid-container h1 {
     padding-top: 0;
-    margin-bottom: 8px;
+    margin-bottom: 0.5rem;
 }
 
 .contact-page .vid-container p {
-    font-size: 18px;
+    font-size: 1.125rem;
     line-height: 1.9;
 }
 
@@ -914,25 +921,25 @@ hr.break {
 /* ---------------- Contact Form Styles ---------------- */
 .form-section {
     max-width: 100%;
-    margin: 40px auto 80px;
-    padding: 40px 0px;
+    margin: 2.5rem auto 5rem;
+    padding: 2.5rem 0px;
     font-family: var(--font-body);  
     background-color: var(--bg-color);
 }
 
 .form-intro {
-    font-size: 15px;
+    font-size: 0.94rem;
     line-height: 1.5;
     color: var(--text-color); 
     margin: 0px auto; 
-    margin-bottom: 35px;
+    margin-bottom: 2.188rem;
     width: 60%;
 }
 
 .contact-form {
     display: flex;
     flex-direction: column;
-    gap: 24px;
+    gap: 1.5rem;
     width: 60%;
     margin: 0px auto;
 }
@@ -945,13 +952,13 @@ hr.break {
 .form-group label {
     font-family: var(--font-heading);  
     font-weight: 600;
-    font-size: 17px;
+    font-size: 1.1rem;
 }
 
 .form-group label .required {
     font-weight: 400;
     font-style: italic;
-    font-size: 13px;
+    font-size: 0.81rem;
     color: #666;
     margin-left: 4px;
 }
@@ -963,9 +970,9 @@ hr.break {
     width: 100%;
     border: none;
     border-bottom: 1px solid var(--accent-color);
-    padding: 6px 0;
+    padding: 0.375rem 0;
     font-family: var(--font-body);  
-    font-size: 15px;
+    font-size: 0.94rem;
     color: var(--text-color);
     outline: none;
     background: transparent;
@@ -977,18 +984,18 @@ hr.break {
 
 /* Custom Dropdown Styling with Yellow Caret */
 .select-wrapper {
-    margin-top: 10px;
+    margin-top: 0.625rem;
     position: relative;
     width: 100%;
 }
 
 .select-wrapper::after {
     content: "▼";
-    font-size: 14px;
+    font-size: 0.875rem;
     color: var(--accent-color);
     border-color: var(--border-color);  
     position: absolute;
-    right: 14px;
+    right: 0.875rem;
     top: 50%;
     transform: translateY(-50%);
     pointer-events: none;
@@ -996,11 +1003,11 @@ hr.break {
 
 .select-wrapper select {
     width: 100%;
-    padding: 10px 14px;
+    padding: 0.625rem 0.875rem;
     border: 1px solid #d3d3d3;
     background-color: #fff;
     font-family: var(--font-body); /* typeface for options */  
-    font-size: 15px;
+    font-size: 0.94rem;
     font-weight: 400;
     color: #333;  
     appearance: none; /* Removes default browser dropdown arrow */
@@ -1017,11 +1024,11 @@ hr.break {
 /* Textarea Box Styling */
 .form-group textarea {
     width: 100%;
-    margin-top: 10px;
+    margin-top: 0.625rem;
     border: 1px solid #b5b5b5;
-    padding: 12px;
+    padding: 0.75rem;
     font-family: var(--font-body);  
-    font-size: 15px;
+    font-size: 0.94rem;
     resize: vertical;
     outline: none;
 }
@@ -1036,13 +1043,13 @@ hr.break {
     background-color: var(--accent-color);  
     color: var(--solidBgText-color);  
     font-family: var(--font-heading);
-    font-size: 16px;
+    font-size: 1rem;
     font-weight: 600;
-    padding: 12px 36px;
+    padding: 0.75rem 2.25rem;
     border: none;
     cursor: pointer;
     transition: background-color 0.2s ease;
-    margin-top: 5px;
+    margin-top: 0.31rem;
 }
 
 .submit-btn:hover {
@@ -1077,32 +1084,32 @@ hr.break {
 .modal-card {
     position: relative;
     background: var(--solidBgText-color);
-    padding: 32px 28px;
+    padding: 2rem 1.75rem;
     border-radius: 12px;
     max-width: 440px;
     width: 90%;
     text-align: center;
-    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 10px 1.56rem rgba(0, 0, 0, 0.2);
 }
 
 .modal-card h2 {
     font-family: var(--font-heading);
     color: var(--text-color);
-    margin-bottom: 5px;
+    margin-bottom: 0.31rem;
 }
 
 .modal-card p {
-    margin-bottom: 10px;
+    margin-bottom: 0.625rem;
 }
 
 /* Close Button (X) */
 .modal-close {
     position: absolute;
     top: 12px;
-    right: 16px;
+    right: 1rem;
     background: transparent;
     border: none;
-    font-size: 24px;
+    font-size: 1.5rem;
     color: #777;
     cursor: pointer;
     line-height: 1;
@@ -1114,8 +1121,8 @@ hr.break {
 
 /* Modal Icons */
 .modal-icon {
-    font-size: 42px;
-    margin-bottom: 12px;
+    font-size: 2.625rem;
+    margin-bottom: 0.75rem;
 }
 
 .modal-icon-success,
@@ -1127,13 +1134,13 @@ hr.break {
 .btn-primary-modal,
 .btn-secondary-modal {
     display: inline-block;
-    padding: 10px 20px;
+    padding: 0.625rem 1.25rem;
     border-radius: 6px;
-    font-size: 14px;
+    font-size: 0.875rem;
     font-weight: 600;
     cursor: pointer;
     text-decoration: none;
-    margin: 6px 4px;
+    margin: 0.375rem 4px;
     border: none;
 }
 
@@ -1146,7 +1153,7 @@ hr.break {
 .btn-secondary-modal {
     border: 1px solid #555;
     color: #555;
-    padding: 12px 20px;
+    padding: 0.75rem 1.25rem;
     background-color: var(--solidBgText-color);
 }
 
@@ -1161,8 +1168,8 @@ hr.break {
 /* -------------------------- Tour Schedule Style Settings --------------------------- */
 .tour-section {
     max-width: 1000px;
-    margin: 60px auto;
-    padding: 0 40px;
+    margin: 3.75rem auto;
+    padding: 0 2.5rem;
     font-family: var(--font-body);
 }
 
@@ -1170,7 +1177,7 @@ hr.break {
     display: flex;
     justify-content: space-between;
     align-items: flex-start;
-    gap: 60px;
+    gap: 3.75rem;
 }
 
 /* Two equal columns */
@@ -1185,14 +1192,14 @@ hr.break {
 }
 
 .tour-col h2 {
-    font-size: 26px;
-    margin-bottom: 15px;
+    font-size: 1.625rem;
+    margin-bottom: 0.94rem;
 }
 
 .schedule-col h2 {
-    padding-top: 45px;
-    margin-bottom: 15px;
-    font-size: 22px;
+    padding-top: 2.81rem;
+    margin-bottom: 0.94rem;
+    font-size: 1.375rem;
 }
 
 /* Map Placeholder Image */
@@ -1223,7 +1230,7 @@ hr.break {
     background-color: var(--secondary-color); 
     color: var(--solidBgText-color); 
     border-radius: 4px 4px 0 0;
-    padding: 10px 18px;
+    padding: 0.625rem 1.125rem;
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -1231,24 +1238,24 @@ hr.break {
 
 .calendar-header h3 {
     font-family: var(--font-body);
-    font-size: 18px;
+    font-size: 1.125rem;
     font-weight: 500;
-    padding-left: 10px;
+    padding-left: 0.625rem;
 }
 
 .calendar-nav {
     display: flex;
     align-items: center;
-    gap: 12px;
+    gap: 0.75rem;
     font-family: var(--font-body); 
-    font-size: 15px;
+    font-size: 0.94rem;
 }
 
 .calendar-nav button {
     background: transparent;
     border: none;
     color: var(--solidBgText-color);
-    font-size: 18px;
+    font-size: 1.125rem;
     font-weight: bold;
     cursor: pointer;
     padding: 0 4px;
@@ -1256,7 +1263,7 @@ hr.break {
 
 .calendar-body {
     position: relative; /* Container reference for floating popover */
-    padding: 16px;
+    padding: 1rem;
 }
 
 .calendar-weekdays {
@@ -1264,9 +1271,9 @@ hr.break {
     grid-template-columns: repeat(7, 0.5fr);
     text-align: center;
     font-weight: 600;
-    font-size: 13px;
+    font-size: 0.81rem;
     color: #777;
-    margin-bottom: 8px;
+    margin-bottom: 0.5rem;
 }
 
 .calendar-days-grid {
@@ -1280,7 +1287,7 @@ hr.break {
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 14px;
+    font-size: 0.875rem;
     border-radius: 3px;
     cursor: pointer;
     transition: background 0.2s ease, color 0.2s ease;
@@ -1311,7 +1318,7 @@ hr.break {
     border: 1px solid #ccc;
     box-shadow: 0 4px 14px rgba(0,0,0,0.15);
     border-radius: 4px;
-    padding: 15px 20px;
+    padding: 0.94rem 1.25rem;
     width: 210px;
     animation: fadeIn 0.15s ease-in-out forwards;
 }
@@ -1328,20 +1335,20 @@ hr.break {
 .time-popup-content {
     display: flex;
     flex-direction: column;
-    gap: 12px;
+    gap: 0.75rem;
 }
 
 .selected-date-text {
     font-family: var(--font-heading);   
-    font-size: 14px;
+    font-size: 0.875rem;
     color: var(--text-color);   
     font-weight: 600;
 }
 
 /* Select element override */
 .time-popup .select-wrapper select {
-    padding: 6px 10px;          /* Solder/compact padding for the overlay */
-    font-size: 13px;            /* Font size specific to calendar popup */
+    padding: 0.375rem 0.625rem;          /* Solder/compact padding for the overlay */
+    font-size: 0.81rem;            /* Font size specific to calendar popup */
     border: 1px solid #cccccc;  /* Border styling */
     border-radius: 3px;
     background-color: #fbfbfbfb;
@@ -1360,7 +1367,7 @@ hr.break {
     right: 8px;
     background: transparent;
     border: none;
-    font-size: 18px;
+    font-size: 1.125rem;
     font-weight: bold;
     color: #888;
     cursor: pointer;
@@ -1377,8 +1384,8 @@ hr.break {
     background-color: var(--accent-color);   
     color: var(--solidBgText-color);   
     font-family: var(--font-heading);   
-    font-size: 14px;
-    padding: 8px 16px;
+    font-size: 0.875rem;
+    padding: 0.5rem 1rem;
     border: none;
     cursor: pointer;
     align-self: left;
@@ -1393,14 +1400,14 @@ hr.break {
 @media (max-width: 768px) {
     .tour-container {
         flex-direction: column;
-        gap: 40px;
+        gap: 2.5rem;
     }
 }
 
 /* ----------------------------- Invest Page Style Settings ------------------------------- */
 /* ---------------------- Replacement Style Settings ------------------------- */
 .invest-page .hero {
-    background: url('../images/invest banner.png') no-repeat center center/cover;
+    background: url('../images/invest thumbnail.jpeg') no-repeat center center/cover;
 }
 
 .invest-page .page-header {
@@ -1408,15 +1415,15 @@ hr.break {
 }
 
 .invest-page .page-header h1 {
-    font-size: 36px;
+    font-size: 2.25rem;
 }
 
 .invest-page .properties-container {
-    gap: 50px;
+    gap: 3.125rem;
 }
 
 .invest-page .property-meta-row {
-    width: 80%;
+    width: 90%;
 }
 
 .invest-page .calc-section {
@@ -1427,23 +1434,23 @@ hr.break {
 
 .invest-page .form-section {
     background-color: var(--solidBgText-color);
-    margin-bottom: 50px;
+    margin-bottom: 3.125rem;
 }
 
 .invest-page .notice {
     background-color: var(--bg-color);
-    padding: 30px 0px;
+    padding: 1.875rem 0px;
 }
 
 .invest-page .site-footer {
-    margin-top: 50px;
+    margin-top: 3.125rem;
 }
 
 /* ----------------------- Vid Style Settings ---------------------- */
 .invest-vid {
     width: 60%;
     margin: 0 auto;
-    padding: 100px 0;
+    padding: 6.25rem 0;
 }
 
 .invest-vid img {
@@ -1459,7 +1466,7 @@ hr.break {
     letter-spacing: 0.5px;
     text-decoration: none;
     text-align: center;
-    padding: 10px 20px;
+    padding: 0.625rem 1.25rem;
     width: 100%;
     transition: background-color 0.2s ease;
 }
@@ -1470,23 +1477,23 @@ hr.break {
 
 /* ---------------------- Statistics Style Settings ------------------------ */
 .stats-section {
-    padding: 40px 80px 60px;
+    padding: 2.5rem 5rem 3.75rem;
     background-color: var(--bg-color);
-    margin-bottom: 60px;
+    margin-bottom: 3.75rem;
 }
 
 .stats-section h1 {
     font-family: var(--font-heading);
     color: var(--primary-color);
-    font-size: 26px;
-    margin-bottom: 40px;
-    padding-left: 40px;
+    font-size: 1.625rem;
+    margin-bottom: 2.5rem;
+    padding-left: 2.5rem;
 }
 
 .stats-grid {
     display: grid;
     grid-template-columns: repeat(4, 0.6fr);
-    gap: 20px;
+    gap: 1.25rem;
     max-width: 100%;
     margin: 0px auto;
 }
@@ -1498,16 +1505,16 @@ hr.break {
 .stat-card h2 {
     font-family: var(--font-heading);
     color: var(--secondary-color);
-    font-size: 42px;
+    font-size: 2.625rem;
     font-weight: 600;
-    margin-bottom: 8px;
+    margin-bottom: 0.5rem;
     line-height: 1.1;
 }
 
 .stat-card p {
     font-family: var(--font-body);
     color: var(--text-color);
-    font-size: 16px;
+    font-size: 1rem;
     line-height: 1.3;
 }
 
@@ -1515,7 +1522,7 @@ hr.break {
 @media (max-width: 768px) {
     .stats-grid {
         grid-template-columns: repeat(2, 1fr);
-        gap: 30px 20px;
+        gap: 1.875rem 1.25rem;
     }
 }
 
@@ -1527,16 +1534,16 @@ hr.break {
 
 /* -------------------- Capital Style Settings ------------------------ */
 .capital-section {
-    padding: 40px 80px;
-    margin-bottom: 50px;
+    padding: 2.5rem 5rem;
+    margin-bottom: 3.125rem;
 }
 
 .capital-section h1 {
     font-family: var(--font-heading);
     color: var(--primary-color);
-    font-size: 26px;
-    margin-bottom: 20px;
-    padding-left: 40px;
+    font-size: 1.625rem;
+    margin-bottom: 1.25rem;
+    padding-left: 2.5rem;
 }
 
 /* Flexbox parent wrapper */
@@ -1544,9 +1551,9 @@ hr.break {
     display: flex;
     align-items: center; /* Vertically centers the graphic relative to the text block */
     justify-content: space-between;
-    gap: 20px;
+    gap: 1.25rem;
     max-width: 80%;
-    padding-left: 80px;
+    padding-left: 5rem;
 }
 
 /* Left Column: Text layout */
@@ -1557,8 +1564,8 @@ hr.break {
 .capital-content h2 {
     font-family: var(--font-heading);
     color: var(--secondary-color);
-    font-size: 22px;
-    margin-bottom: 20px;
+    font-size: 1.375rem;
+    margin-bottom: 1.25rem;
 }
 
 /* Right Column: Image container */
@@ -1576,10 +1583,10 @@ hr.break {
 /* Left-aligned, non-full-width horizontal break */
 .capital-section .break {
     max-width: 90%;      /* Controls line length (adjust percentage as needed) */
-    margin-left: 40px;   /* Matches text indent alignment */
+    margin-left: 2.5rem;   /* Matches text indent alignment */
     margin-right: 0;     /* Keeps line left-aligned instead of centered */
-    margin-top: 50px;
-    padding-bottom: 20px;
+    margin-top: 3.125rem;
+    padding-bottom: 1.25rem;
 }
 
 /* Mobile Responsiveness */
@@ -1587,7 +1594,7 @@ hr.break {
     .capital-container {
         flex-direction: column;
         align-items: flex-start;
-        gap: 30px;
+        gap: 1.875rem;
     }
 
     .capital-image {
@@ -1608,15 +1615,15 @@ hr.break {
 
 /* ------------------ Projects Style Settings ------------------ */
 .projects-section {
-    padding: 40px 120px 50px;
+    padding: 2.5rem 7.5rem 3.125rem;
     background-color: var(--bg-color);
 }
 
 .projects-section h1 {
     color: var(--primary-color);
     font-family: var(--font-heading);
-    font-size: 26px;
-    margin-bottom: 20px;
+    font-size: 1.625rem;
+    margin-bottom: 1.25rem;
 }
 
 /* ---------------------- Calc Style Settings -------------------------- */
@@ -1634,21 +1641,21 @@ hr.break {
 .invest-calc-accordion.is-expanded {
     max-height: 800px; /* High enough value to contain form height */
     opacity: 1;
-    padding-top: 40px;
-    padding-bottom: 40px;
+    padding-top: 2.5rem;
+    padding-bottom: 2.5rem;
 }
 
 /* -------------------------------------- Featured Style Settings -------------------------------- */
 .featured-section {
-    padding: 20px 80px 60px;
+    padding: 1.25rem 5rem 3.75rem;
 }
 
 .featured-section h1 {
     font-family: var(--font-heading);
     color: var(--primary-color);
-    font-size: 26px;
-    margin-bottom: 40px;
-    padding-left: 40px;
+    font-size: 1.625rem;
+    margin-bottom: 2.5rem;
+    padding-left: 2.5rem;
 }
 
 .featured-container {
@@ -1656,7 +1663,7 @@ hr.break {
     align-items: center; /* Vertically centers the graphic relative to the text block */
     justify-content: space-between;
     max-width: 78%;
-    padding-left: 40px;
+    padding-left: 2.5rem;
 }
 
 /* Right Column: Image container */
@@ -1672,18 +1679,18 @@ hr.break {
 }
 
 .featured-txt {
-    font-size: 18px;
+    font-size: 1.125rem;
 }
 
 .featured-txt ul {
-    padding-left: 30px;
+    padding-left: 1.875rem;
     list-style-type: none;
-    margin-top: 10px;
+    margin-top: 0.625rem;
 }
 
 .featured-txt li {
-    margin-bottom: 5px;  
-    padding-left: 20px;  
+    margin-bottom: 0.31rem;  
+    padding-left: 1.25rem;  
     position: relative;
 }
 
@@ -1695,49 +1702,49 @@ hr.break {
     color: var(--accent-color);
     font-family: var(--font-body);
     font-weight: 900;
-    font-size: 28px;
+    font-size: 1.75rem;
     line-height: 1;
 }
 
 /* ----------------------------- Process Style Settings ---------------------------- */
 .process-section {
-    padding: 40px 80px;
+    padding: 2.5rem 5rem;
     background-color: var(--bg-color);
-    margin-top: 40px;
+    margin-top: 2.5rem;
 }
 
 .process-section h1 {
     font-family: var(--font-heading);
     color: var(--primary-color);
-    font-size: 26px;
-    margin-bottom: 30px;
+    font-size: 1.625rem;
+    margin-bottom: 1.875rem;
 }
 
 .process-section p {
-    padding-left: 40px;
-    font-size: 17px;
+    padding-left: 2.5rem;
+    font-size: 1.1rem;
 }
 
 .process-section b {
     font-family: var(--font-heading);
     color: var(--secondary-color);
-    font-size: 22px;
+    font-size: 1.375rem;
 }
 
 .process-section .invest-btns {
-    margin-top: 50px;
-    padding-left: 40px;
+    margin-top: 3.125rem;
+    padding-left: 2.5rem;
     width: 100%;
 }
 
 .invest-btns a {
     color: var(--solidBgText-color);
     font-family: var(--font-heading);
-    font-size: 18px;
-    padding: 10px 34px;
+    font-size: 1.125rem;
+    padding: 0.625rem 2.125rem;
     width: fit-content;
     margin: 0;
-    margin-right: 15px;
+    margin-right: 0.94rem;
     background-color: var(--accent-color);
     border: 1px solid var(--border-color);
     text-decoration: none;
@@ -1751,7 +1758,7 @@ hr.break {
 /* ----------------------------- Properties Page Style Settings ------------------------------- */
 /* ---------------------- Replacement Style Settings ------------------------- */
 .properties-page .hero {
-    background: url('../images/invest banner.png') no-repeat center center/cover;
+    background: url('../images/property thumbnail.jpeg') no-repeat center center/cover;
 }
 
 .properties-page .page-header {
@@ -1759,22 +1766,22 @@ hr.break {
 }
 
 .properties-page .page-header h1 {
-    font-size: 36px;
+    font-size: 2.25rem;
 }
 
 .properties-page .properties-section{
-    margin-top: 50px;
+    margin-top: 3.125rem;
 }
 
 .properties-page .properties-container {
     display: flex;
     align-items: center; /* Vertically centers the text block relative to the left gallery */
-    gap: 50px;
+    gap: 3.125rem;
     max-width: 100%;
 }
 
 .properties-page .notice {
-    padding: 60px 0px 80px;
+    padding: 3.75rem 0px 5rem;
     width: 80%;
     margin: 0px auto;
 }
@@ -1810,10 +1817,10 @@ hr.break {
     background: transparent;
     border: none;
     color: var(--solidBgText-color);
-    font-size: 32px;
+    font-size: 2rem;
     cursor: pointer;
     z-index: 5;
-    padding: 10px;
+    padding: 0.625rem;
     filter: drop-shadow(0px 2px 4px var(--text-color));
     transition: transform 0.15s ease, opacity 0.15s ease;
 }
@@ -1829,11 +1836,11 @@ hr.break {
 .slide-counter {
     position: absolute;
     bottom: 12px;
-    right: 16px;
+    right: 1rem;
     color: var(--solidBgText-color);
     font-family: var(--font-body);
     font-weight: 600;
-    font-size: 20px;
+    font-size: 1.25rem;
     text-shadow: 1px 1px 4px var(--text-color);
     user-select: none;
 }
@@ -1870,30 +1877,30 @@ hr.break {
 
 /* -------------------- Calculator Section -------------------- */
 .calc-section {
-    padding: 40px 80px;
-    margin-top: 60px;
+    padding: 2.5rem 5rem;
+    margin-top: 3.75rem;
     background-color: var(--bg-color);
 }
 
 .calc-section h1 {
     font-family: var(--font-heading);
     color: var(--primary-color);
-    font-size: 26px;
-    margin-bottom: 30px;
+    font-size: 1.625rem;
+    margin-bottom: 1.875rem;
 }
 
 /* Tabs Header Bar */
 .calc-tabs {
     display: flex;
     align-items: center;
-    gap: 12px;
-    margin-bottom: 30px;
+    gap: 0.75rem;
+    margin-bottom: 1.875rem;
 }
 
 .tab-link {
     background: none;
     border: none;
-    font-size: 15px;
+    font-size: 0.94rem;
     font-weight: 700;
     color: var(--text-color);
     cursor: pointer;
@@ -1909,7 +1916,7 @@ hr.break {
 
 .tab-separator {
     color: #888888;
-    font-size: 14px;
+    font-size: 0.875rem;
 }
 
 /* Main Calculator */
@@ -1921,7 +1928,7 @@ hr.break {
 .calc-container {
     display: flex;
     align-items: flex-start;
-    gap: 60px;
+    gap: 3.75rem;
     width: 60%;
     margin: 0px auto;
 }
@@ -1942,20 +1949,20 @@ hr.break {
 }
 
 .form-group {
-    margin-bottom: 20px;
+    margin-bottom: 1.25rem;
 }
 
 .form-group label {
     display: block;
-    font-size: 18px;
+    font-size: 1.125rem;
     font-weight: 700;
-    margin-bottom: 8px;
+    margin-bottom: 0.5rem;
 }
 
 .label-with-note span {
     font-weight: 400;
     font-style: italic;
-    font-size: 15px;
+    font-size: 0.94rem;
     color: #555;
 }
 
@@ -1973,9 +1980,9 @@ hr.break {
     background: transparent;
     border: none;
     border-bottom: 1px solid var(--accent-color);
-    padding: 6px 24px 6px 0;
+    padding: 0.375rem 1.5rem 0.375rem 0;
     font-family: var(--font-body);
-    font-size: 14px;
+    font-size: 0.875rem;
     color: var(--text-color);
     outline: none;
     appearance: none;
@@ -2004,7 +2011,7 @@ hr.break {
 /* Date Range Container */
 .date-inputs {
     display: flex;
-    gap: 20px;
+    gap: 1.25rem;
 }
 
 .input-with-icon {
@@ -2016,7 +2023,7 @@ hr.break {
 .range-wrapper {
     display: flex;
     align-items: center;
-    gap: 12px;
+    gap: 0.75rem;
 }
 
 /* Range Input Track */
@@ -2106,7 +2113,7 @@ hr.break {
 
 /* Slider Value */
 .range-value {
-    font-size: 13px;
+    font-size: 0.81rem;
     font-weight: 600;
     color: var(--text-color);
 }
@@ -2115,8 +2122,8 @@ hr.break {
 .checkbox-grid {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
-    gap: 16px 20px;
-    margin-top: 12px;
+    gap: 1rem 1.25rem;
+    margin-top: 0.75rem;
 }
 
 /* Checkbox Label Wrapper */
@@ -2124,9 +2131,9 @@ hr.break {
     display: inline-flex !important; 
     flex-direction: row;
     align-items: center;
-    gap: 10px;
+    gap: 0.625rem;
     margin-bottom: 0;
-    font-size: 14px;
+    font-size: 0.875rem;
     font-family: var(--font-body);
     font-weight: 400;
     color: var(--text-color);
@@ -2166,12 +2173,12 @@ hr.break {
     background-color: var(--accent-color);
     color: var(--solidBgText-color);
     border: 1px solid var(--border-color);
-    padding: 10px 24px;
+    padding: 0.625rem 1.5rem;
     font-weight: 700;
-    font-size: 14px;
+    font-size: 0.875rem;
     border-radius: 2px;
     cursor: pointer;
-    margin-top: 10px;
+    margin-top: 0.625rem;
     transition: opacity 0.2s ease;
 }
 
@@ -2183,18 +2190,18 @@ hr.break {
 .calc-receipt {
     flex: 1 1 40%;
     border: 1px solid #f0e6cc;
-    padding: 24px;
+    padding: 1.5rem;
     background-color: var(--solidBgText-color);
     border-radius: 2px;
     max-width: 320px;
-    margin-top: 32px
+    margin-top: 2rem
 }
 
 .total-title {
-    font-size: 16px;
+    font-size: 1rem;
     font-weight: 700;
     color: #222222;
-    margin-bottom: 20px;
+    margin-bottom: 1.25rem;
     text-align: right;
 }
 
@@ -2202,7 +2209,7 @@ hr.break {
 .breakdown-list {
     display: none;
     flex-direction: column;
-    gap: 8px;
+    gap: 0.5rem;
     align-items: flex-end;
 }
 
@@ -2211,7 +2218,7 @@ hr.break {
 }
 
 .breakdown-item {
-    font-size: 12px;
+    font-size: 0.75rem;
     color: #555555;
     text-align: right;
 }
@@ -2226,21 +2233,21 @@ hr.break {
     border: 1px solid var(--border-color);
     color: #ffffff;
     text-decoration: none;
-    font-size: 12px;
+    font-size: 0.75rem;
     font-weight: 700;
-    padding: 8px 14px;
+    padding: 0.5rem 0.875rem;
     border-radius: 2px;
-    margin-top: 16px;
+    margin-top: 1rem;
     text-align: center;
 }
 
 /* Calculator Legal Disclaimer Text (.calc-disclaimer) */
 .calc-disclaimer {
-    font-size: 12px;
+    font-size: 0.75rem;
     color: #666666;
     display: none; /* Only active on Invest mode */
     width: 60%;
-    margin: 30px auto;
+    margin: 1.875rem auto;
 }
 
 .calc-disclaimer.active {
@@ -2251,7 +2258,7 @@ hr.break {
 @media (max-width: 768px) {
     .calc-container {
         flex-direction: column;
-        gap: 30px;
+        gap: 1.875rem;
     }
 
     .calc-form,
@@ -2266,16 +2273,16 @@ hr.break {
 /* ---------------- Tablet: ~900px (nav collapses to hamburger) ---------------- */
 @media (max-width: 900px) {
     nav {
-        padding: 10px 20px;
+        padding: 0.625rem 1.25rem;
         flex-wrap: wrap;
     }
 
     nav h1 {
-        font-size: 19px;
+        font-size: 1.19rem;
     }
 
     nav .right-side {
-        gap: 16px;
+        gap: 1rem;
     }
 
     .nav-toggle {
@@ -2302,14 +2309,14 @@ hr.break {
         flex-direction: column;
         align-items: flex-start;
         gap: 0;
-        padding: 6px 24px 14px;
+        padding: 0.375rem 1.5rem 0.875rem;
         width: 100%;
     }
 
     .nav-links ul li {
         display: block;
         width: 100%;
-        padding: 10px 0;
+        padding: 0.625rem 0;
         border-bottom: 1px solid rgba(255, 255, 255, 0.15);
         text-align: center;
     }
@@ -2319,7 +2326,7 @@ hr.break {
     }
 
     .social-icons {
-        gap: 10px;
+        gap: 0.625rem;
     }
 }
 
@@ -2331,44 +2338,44 @@ hr.break {
     }
 
     .page-header {
-        margin-left: 24px;
+        margin-left: 1.5rem;
         top: 72%;
     }
 
     .page-header h1 {
-        font-size: 26px;
+        font-size: 1.625rem;
     }
 
     .page-header h2 {
-        font-size: 17px;
+        font-size: 1.1rem;
     }
 
     .about-page .page-header h1,
     .contact-page .page-header h1,
     .invest-page .page-header h1,
     .properties-page .page-header h1 {
-        font-size: 28px;
+        font-size: 1.75rem;
     }
 
     .contact-block h3 {
-        font-size: 12px;
+        font-size: 0.75rem;
         line-height: 1.5;
     }
 
     .contact-block {
-        padding: 10px 14px;
+        padding: 0.625rem 0.875rem;
     }
 
     /* Company overview / About "Our Story" video-style blocks */
     .vid-container {
         max-width: 100%;
-        padding: 40px 20px;
+        padding: 2.5rem 1.25rem;
     }
 
     .vid-container img {
         float: none;
         display: block;
-        margin: 0 auto 20px;
+        margin: 0 auto 1.25rem;
     }
 
     /* Contact page personal-info block (flex row -> stacked) */
@@ -2376,30 +2383,30 @@ hr.break {
         flex-direction: column;
         width: 100%;
         text-align: center;
-        gap: 16px;
+        gap: 1rem;
     }
 
     /* Services */
     .services-section {
-        padding: 30px 20px;
+        padding: 1.875rem 1.25rem;
     }
 
     .services-grid {
         grid-template-columns: 1fr;
-        gap: 24px;
+        gap: 1.5rem;
     }
 
     /* Properties / Active Asset Case Study */
     .properties-section,
     .projects-section {
-        padding: 30px 20px;
+        padding: 1.875rem 1.25rem;
     }
 
     .property-meta-row,
     .invest-page .property-meta-row {
         width: 100%;
         flex-wrap: wrap;
-        gap: 12px;
+        gap: 0.75rem;
     }
 
     .property-description {
@@ -2429,17 +2436,17 @@ hr.break {
 
     /* Invest section CTA block */
     .invest-section {
-        padding: 0 20px;
+        padding: 0 1.25rem;
     }
 
     /* Mission & Values / Quote (About page) */
     .mission-section {
-        padding: 30px 20px 40px;
+        padding: 1.875rem 1.25rem 2.5rem;
     }
 
     .mission-container {
         flex-direction: column;
-        gap: 30px;
+        gap: 1.875rem;
     }
 
     .missions,
@@ -2449,13 +2456,13 @@ hr.break {
     }
 
     .quote-section {
-        padding: 40px 20px;
+        padding: 2.5rem 1.25rem;
     }
 
     .quote-container {
         flex-direction: column;
         text-align: center;
-        gap: 24px;
+        gap: 1.5rem;
     }
 
     .quote-content {
@@ -2507,7 +2514,7 @@ hr.break {
 
     /* Tour section map */
     .tour-section {
-        padding: 0 20px;
+        padding: 0 1.25rem;
     }
 
     .map-wrapper img {
@@ -2520,8 +2527,8 @@ hr.break {
     .capital-section,
     .featured-section,
     .process-section {
-        padding-left: 20px;
-        padding-right: 20px;
+        padding-left: 1.25rem;
+        padding-right: 1.25rem;
     }
 
     .capital-section h1,
@@ -2534,7 +2541,7 @@ hr.break {
     .stats-section h1 {
         width: 70%;
         margin: 0px auto;
-        margin-bottom: 40px;
+        margin-bottom: 2.5rem;
     }
 
     .capital-container {
@@ -2546,13 +2553,13 @@ hr.break {
         flex-direction: column;
         max-width: 100%;
         padding-left: 0;
-        gap: 24px;
+        gap: 1.5rem;
     }
 
     .invest-btns {
         display: flex;
         flex-direction: column;
-        gap: 12px;
+        gap: 0.75rem;
         width: 100%;
     }
 
@@ -2563,7 +2570,7 @@ hr.break {
 
     /* ROI / Cost calculator */
     .calc-section {
-        padding: 30px 20px;
+        padding: 1.875rem 1.25rem;
     }
 
     .calc-head,
@@ -2588,16 +2595,16 @@ hr.break {
 
     /* Notice strip */
     .notice {
-        padding: 20px 20px 50px;
+        padding: 1.25rem 1.25rem 3.125rem;
     }
 
     .invest-page .notice {
-        padding: 20px 20px 50px;
+        padding: 1.25rem 1.25rem 3.125rem;
     }
 
     .properties-page .notice {
         width: 90%;
-        padding: 30px 0 50px;
+        padding: 1.875rem 0 3.125rem;
     }
 }
 
@@ -2608,7 +2615,7 @@ hr.break {
     }
 
     .page-header {
-        margin-left: 18px;
+        margin-left: 1.125rem;
     }
 
     .page-header h1,
@@ -2616,7 +2623,7 @@ hr.break {
     .contact-page .page-header h1,
     .invest-page .page-header h1,
     .properties-page .page-header h1 {
-        font-size: 22px;
+        font-size: 1.375rem;
     }
 
     .contact-block h3 {
@@ -2624,7 +2631,7 @@ hr.break {
     }
 
     nav h1 {
-        font-size: 16px;
+        font-size: 1rem;
     }
 
     nav .logo img {
@@ -2633,7 +2640,7 @@ hr.break {
 
     .invest-vid {
         width: 90%;
-        padding: 50px 0;
+        padding: 3.125rem 0;
     }
 
     .thumbnail-strip {
@@ -2641,16 +2648,483 @@ hr.break {
     }
 
     .notice {
-        font-size: 15px;
+        font-size: 0.94rem;
     }
 
     hr.break {
-        padding: 20px 15px 30px;
+        padding: 1.25rem 0.94rem 1.875rem;
     }
 
     .footer-brand {
         flex-direction: column;
         align-items: flex-start;
-        gap: 10px;
+        gap: 0.625rem;
+    }
+}
+
+/* -------------------ACCESSIBILITY + RESPONSIVE LAYER (WCAG 2.2 AA)------------------------ */
+.visually-hidden {
+    position:absolute!important;
+    width:1px;
+    height:1px;
+    margin:-1px;
+    padding:0;
+    overflow:hidden;
+    clip:rect(0 0 0 0);
+    clip-path:inset(50%);
+    white-space:nowrap;
+    border:0;
+}
+
+.skip-link {
+    position:absolute;
+    left:1rem;
+    top:-4rem;
+    z-index:3000;
+    padding:.75rem 1.25rem;
+    background:#fff;
+    color:#1f1f1f;
+    font-weight:600;
+    border:2px solid #1f1f1f;
+    border-radius:4px;
+    transition:top .15s;
+}
+
+.skip-link:focus {
+    top:1rem;
+}
+
+main {
+    display:block;
+}
+
+abbr {
+    text-decoration:none;
+}
+ 
+/* Focus */
+:focus-visible {
+    outline:3px solid var(--focus-color)!important;
+    outline-offset:3px;
+}
+
+nav :focus-visible,
+.site-footer :focus-visible,
+.contact-block :focus-visible,
+.calendar-header :focus-visible,
+.slide-container :focus-visible {
+    outline-color:#fff!important;
+}
+
+.modal-card[tabindex="-1"]:focus-visible {
+    outline:none!important;
+}
+ 
+/* Hero: flows with content instead of fixed height + absolute text */
+.hero {
+    height:auto;
+    min-height: clamp(18rem,40vw,27.75rem);
+}
+
+.hero::before {
+    content:"";
+    position:absolute;
+    inset:0;
+    background:linear-gradient(to top,rgba(0,0,0,.72),rgba(0,0,0,.2) 60%,rgba(0,0,0,0));
+    pointer-events:none;
+}
+
+.page-header,
+.about-page .page-header,
+.contact-page .page-header,
+.invest-page .page-header,
+.properties-page .page-header {
+    position:relative;
+    top:auto;
+    z-index:1;
+    margin:auto 0 0;
+    padding:2rem var(--gutter);
+    width:100%;
+}
+
+.page-header h1 {
+    overflow-wrap:anywhere;
+}
+ 
+/* Navigation */
+nav {
+    padding-inline:clamp(1rem,4vw,3.75rem)
+}
+
+nav ul li a {
+    display:inline-block;
+    padding:.5rem .25rem;
+}
+
+nav .active {
+    border-bottom:2px solid #ffdf80;
+}
+
+.social-icons {
+    gap:0;
+}
+
+.social-icons a,.footer-socials a {
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    min-width:2.75rem;
+    min-height:2.75rem;
+}
+
+.nav-toggle {
+    width:2.75rem;
+    height:2.75rem;
+    padding:.8125rem .5625rem;
+
+}
+ 
+/* Contrast fixes */
+.btn-primary,
+.property-actions .btn-primary,
+.invest-section .btn,
+.quote-btns a,
+.invest-btns a,
+.btn-primary-modal,
+.submit-btn,.confirm-time-btn,
+.btn-calculate,.btn-prospectus,
+.invest-vid a,
+.day-cell.active-day {
+    color:var(--btnText-color);
+}
+
+.contact-block a {
+    text-decoration:underline;
+}
+
+.contact-block a:visited {
+    color:#fff;
+}
+
+.notice a:visited,.contact-page .vid-container a:visited {
+    color:#8a5a00;
+}
+
+.contact-block a,.footer-column a,.company-address {
+    overflow-wrap:anywhere;
+}
+
+.calendar-weekdays {
+    color:#595959;
+}
+
+.breakdown-item {
+    font-size:.875rem;
+}
+
+.modal-close,.close-popup-btn {
+    color:#555;
+}
+
+.btn-secondary-modal {
+    color:#333;
+}
+ 
+/* Link-styled buttons */
+.link-button {
+    background:none;
+    border:0;
+    padding:.25rem .5rem;
+    font:inherit;
+    color:inherit;
+    text-decoration:underline;
+    cursor:pointer;
+}
+
+.footer-column .link-button {
+    color:var(--solidBgText-color);
+    font-size:.9375rem;
+    line-height:1.6;
+}
+
+.footer-column .link-button:hover {
+    color:#ffdf80;
+}
+
+.calc-link.link-button {
+    color:var(--primary-color);
+    font-size:.9375rem;
+    padding:.5rem 0;
+}
+
+.calc-link.link-button:hover {
+    color:var(--secondary-color);
+}
+
+.footer-column a,.footer-legal a {
+    display:inline-block;
+    padding:.25rem .5rem;
+}
+ 
+/* Touch targets */
+.btn-calculate,.submit-btn,.confirm-time-btn {
+    min-height:2.75rem;
+}
+
+.btn-prospectus {
+    padding:.75rem 1rem;
+    font-size:.875rem;
+}
+
+.tab-link {
+    padding:.5rem .25rem;
+    font-size:1rem;
+}
+
+.slide-nav,.calendar-nav button,.modal-close {
+    min-width:2.75rem;
+    min-height:2.75rem;
+}
+
+.modal-close {
+    top:.25rem;
+    right:.5rem;
+}
+
+.close-popup-btn {
+    min-width:2rem;
+    min-height:2rem;
+}
+
+button.thumb-item {
+    display:block;
+    width:100%;
+    padding:0;
+    border:0;
+    background:none;
+    font:inherit
+}
+
+button.day-cell {
+    border:0;
+    background:none;
+    font:inherit;
+    color:inherit;
+    padding:0;
+    width:100%
+}
+ 
+/* Forms */
+.form-group input[type="text"],
+.form-group input[type="email"],
+.form-group input[type="tel"] {
+    border-bottom-color:#767676;
+}
+
+.select-wrapper select,.form-group textarea {
+    border-color:#767676;
+}
+
+.calc-select-wrapper,.calc-select-wrapper select,.date-inputs input {
+    border-bottom-color:#767676;
+}
+.form-group input,.form-group select,.date-inputs input {
+    min-height:2.75rem;
+}
+
+.form-group .form-label {
+    display:block;
+    font-size:1.125rem;
+    font-weight:700;
+    margin-bottom:.5rem;
+}
+
+.date-inputs {
+    flex-wrap:wrap;
+}
+
+.input-with-icon {
+    min-width:9rem;
+}
+
+.date-inputs .sub-label {
+    font-size:.875rem;
+    font-weight:400;
+    margin-bottom:.25rem;
+}
+
+.select-wrapper::after {
+    content:"▼" / "";
+}
+
+.form-status,.schedule-status {
+    min-height:1.5rem;
+    margin-top:.75rem;
+    font-weight:600;
+    color:var(--secondary-color);
+}
+
+.range-wrapper input[type="range"]::-webkit-slider-thumb {
+    width:24px;
+    height:24px;
+    margin-top:-10px;
+    border-color:#6e5600;
+}
+
+.range-wrapper input[type="range"]::-moz-range-thumb {
+    width:24px;
+    height:24px;
+    border-color:#6e5600;
+}
+
+.range-wrapper input[type="range"] {
+    min-height:2rem;
+}
+
+.range-value {
+    font-size:.875rem;
+}
+ 
+/* Hidden panels must leave the tab order and accessibility tree */
+.modal-overlay {
+    visibility:hidden;
+    transition:opacity .25s ease-in-out, visibility 0s linear .25s;
+}
+
+.modal-overlay.active {
+    visibility:visible;
+    transition-delay:0s;
+}
+
+.modal-card {
+    max-height:90vh;
+    overflow-y:auto;
+}
+body.modal-open {
+    overflow:hidden;
+}
+
+.invest-calc-accordion {
+    visibility:hidden;
+    transition:max-height .4s ease-in-out, opacity .3s ease-in-out, padding .4s ease, visibility 0s linear .4s;
+}
+
+.invest-calc-accordion.is-expanded {
+    visibility:visible;
+    max-height:2000px;
+    transition-delay:0s;
+}
+ 
+/* Fluid gutters at every width */
+.services-section,
+.properties-section,
+.projects-section,
+.invest-section,
+.mission-section,
+.quote-section,
+.stats-section,
+.capital-section,
+.featured-section,
+.process-section,
+.calc-section,
+.site-footer {
+    padding-inline:var(--gutter);
+}
+ 
+@media (max-width:960px){
+    .nav-links {
+        visibility:hidden;
+        transition:max-height .3s ease, visibility 0s linear .3s;
+    }
+
+    .nav-links.is-open {
+        visibility:visible;
+        max-height:30rem;
+        transition-delay:0s;
+    }
+
+    nav ul li a {
+        display:block;
+        padding:.25rem 0;
+        min-height:2.75rem;
+        line-height:2.25rem;
+    }
+}
+@media (max-width:1024px){
+    .vid-container {
+        max-width:100%;
+    }
+
+    .services {
+        gap:2rem;
+    }
+
+    .capital-container,.featured-container {
+        max-width:100%;
+        padding-left:0;
+    }
+
+    .capital-section h2,
+    .featured-section h2,
+    .stats-section h2,
+    .process-section p,
+    .process-section .invest-btns { 
+        padding-left:0;
+    }
+
+    .calc-head,.calc-container,.calc-disclaimer {
+        width:100%;
+    }
+
+    .contact-form,.form-intro {
+        width:min(90%,40rem);
+    }
+
+    .contact-page .vid-container {
+        width:90%;
+    }
+
+    .footer-top {
+        max-width:100%;
+        flex-wrap:wrap;
+        gap:1.5rem 2rem;
+    }
+
+    .properties-container,
+    .invest-page .properties-container,
+    .properties-page .properties-container {
+        gap:2rem;
+    }
+
+    .tour-container,.mission-container {
+        gap:2rem;
+    }
+}
+@media (max-width:768px){
+    .contact-page .vid-container {
+        width:100%;
+    }
+
+    .properties-page .properties-container {
+        flex-direction:column;
+        align-items:stretch;
+    }
+}
+@media (max-width:480px){
+    .invest-btns a,.quote-btns a {
+        display:block;
+    }
+}
+@media (prefers-reduced-motion:reduce){
+    html {
+        scroll-behavior:auto;
+    }
+
+    *,*::before,*::after {
+        animation-duration:.01ms!important;
+        animation-iteration-count:1!important;
+        transition-duration:.01ms!important;
+        transition-delay:0s!important;
+        scroll-behavior:auto!important;
     }
 }
