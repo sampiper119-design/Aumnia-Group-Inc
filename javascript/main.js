@@ -125,160 +125,311 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 });
 
-// Rate & Fee Configurations
-const RENT_CONFIG = {
-    'commercial': { baseNightly: 80, taxRate: 0.15 },
-    'residential': { baseNightly: 80, taxRate: 0.15 }
+// PRICING - single source of truth. Change a price here and the rate dropdown, the calculator and the booking modal all follow.
+const RATES = {
+    weeknight: 80,        // per night, Sun-Thu nights
+    weekend: 88,          // per night, Fri & Sat nights
+    monthly: 800,         // per full block of monthLength nights
+    monthLength: 30,
+    commercialMonthly: 800, // commercial lease: price per month of the lease term (3-5 years)
+    serviceFee: 0.15,     // added on top of the base rate
+    capAtMonthly: false   // true = a partial month never costs more than one monthly rate
 };
 
-const ADDON_PRICES = {
-    'feature1': 25,
-    'feature2': 35,
-    'feature3': 15,
-    'feature4': 50
+const RENT_CONFIG = {
+    'commercial': { taxRate: RATES.serviceFee },
+    'residential': { taxRate: RATES.serviceFee }
 };
+
+const ADDON_PRICES = { 'feature1': 25, 'feature2': 35, 'feature3': 15, 'feature4': 50 };
 
 const INVEST_CONFIG = {
-    'commercial': 0.182, // 18.2% ROI
-    'residential': 0.125  // 12.5% ROI
+    'commercial': 0.182, // 18.2% annual yield
+    'residential': 0.125 // 12.5% annual yield
 };
 
-// Global Calculator Controller
-function calculateCosts() {
-    const investForm = document.getElementById('form-invest');
-    const investPageForm = document.getElementById('form-invest-page');
-    
-    // Check if on Invest page or Invest mode tab is active
-    if (investPageForm || (investForm && investForm.classList.contains('active'))) {
-        calculateInvestROI(document.body.classList.contains('invest-page'));
-    } else {
-        calculateRentCost();
+const DAY_MS = 86400000;
+const plural = (n, word) => `${n} ${word}${n === 1 ? '' : 's'}`;
+const money = n => new Intl.NumberFormat('en-US', {
+    style: 'currency', currency: 'USD',
+    minimumFractionDigits: Number.isInteger(n) ? 0 : 2, maximumFractionDigits: 2
+}).format(n);
+// 'YYYY-MM-DD' -> UTC midnight, so time zones and daylight saving can never shift a night
+const parseDay = s => { const [y, m, d] = s.split('-').map(Number); return Date.UTC(y, m - 1, d); };
+
+const fmtDay = ms => new Date(ms).toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric', timeZone: 'UTC' });
+
+// Commercial lease: monthly rate x every month of the 3-5 year term
+function calculateLease(startStr, yearsStr) {
+    const years = parseInt(yearsStr, 10);
+    if (!startStr || !years) return { valid: false, reason: !startStr ? 'lease-start' : 'lease-term' };
+    const [y, m, d] = startStr.split('-').map(Number);
+    const months = years * 12;
+    return { valid: true, years, months, startMs: Date.UTC(y, m - 1, d), endMs: Date.UTC(y + years, m - 1, d),
+             base: months * RATES.commercialMonthly };
+}
+
+// Prices a stay night by night. A "night" belongs to the day you sleep: Fri/Sat nights are weekend rate.
+// Every full 30 nights is billed at the monthly rate; leftover nights are billed nightly.
+function calculateStay(startStr, endStr) {
+    if (!startStr || !endStr) return { valid: false, reason: 'missing' };
+    const start = parseDay(startStr);
+    const nights = Math.round((parseDay(endStr) - start) / DAY_MS);
+    if (nights < 1) return { valid: false, reason: 'order' };
+
+    const months = Math.floor(nights / RATES.monthLength);
+    let weekday = 0, weekend = 0;
+    for (let i = months * RATES.monthLength; i < nights; i++) {
+        const dow = new Date(start + i * DAY_MS).getUTCDay(); // 5 = Friday, 6 = Saturday
+        if (dow === 5 || dow === 6) weekend++; else weekday++;
     }
+    const extra = weekday + weekend;
+    const capped = RATES.capAtMonthly && (weekday * RATES.weeknight + weekend * RATES.weekend) > RATES.monthly;
+
+    const lines = [];
+    if (months) lines.push([`Monthly rate (${months} × ${money(RATES.monthly)})`, months * RATES.monthly]);
+    if (capped) {
+        lines.push([`Monthly rate for the last ${plural(extra, 'night')}`, RATES.monthly]);
+    } else {
+        if (weekday) lines.push([`${plural(weekday, 'week night')} × ${money(RATES.weeknight)}`, weekday * RATES.weeknight]);
+        if (weekend) lines.push([`${plural(weekend, 'weekend night')} × ${money(RATES.weekend)}`, weekend * RATES.weekend]);
+    }
+    return { valid: true, nights, lines, base: lines.reduce((sum, [, amount]) => sum + amount, 0) };
+}
+
+const withFee = (base, rate) => { const fee = Math.round(base * rate * 100) / 100; return { fee, total: base + fee }; };
+const row = (label, value) => `<div class="breakdown-item"><span>${label} =</span> <b>${value}</b></div>`;
+const note = text => `<div class="breakdown-item"><span>${text}</span></div>`;
+
+// Open/Close Modal Handlers
+function openPaymentModal() {
+    const modal = document.getElementById('paymentModal');
+    if (modal) {
+        modal.classList.add('active');
+        modal.setAttribute('aria-hidden', 'false');
+    }
+}
+
+function closePaymentModal() {
+    const modal = document.getElementById('paymentModal');
+    if (modal) {
+        modal.classList.remove('active');
+        modal.setAttribute('aria-hidden', 'true');
+    }
+}
+
+// Toggle between Short-Term Residential vs Commercial Lease fields
+function toggleModalLeaseFields(intent) {
+    const resFields = document.getElementById('modalResidentialFields');
+    const commFields = document.getElementById('modalCommercialFields');
+    const checkin = document.getElementById('modal-checkin');
+    const checkout = document.getElementById('modal-checkout');
+    const commStart = document.getElementById('modal-comm-start');
+    const totalOutput = document.getElementById('modalTotalOutput');
+
+    if (intent === 'commercial') {
+        resFields.style.display = 'none';
+        commFields.style.display = 'flex';
+        checkin.required = false;
+        checkout.required = false;
+        commStart.required = true;
+        totalOutput.textContent = "Commercial Lease Inquiry";
+    } else {
+        resFields.style.display = 'flex';
+        commFields.style.display = 'none';
+        checkin.required = true;
+        checkout.required = true;
+        commStart.required = false;
+        recalculateModalTotal();
+    }
+}
+
+// Switch Payment Method Panel
+function switchModalPaymentTab(type) {
+    const cardPanel = document.getElementById('modalCardFields');
+    const expressPanel = document.getElementById('modalExpressFields');
+    const tabs = document.querySelectorAll('.payment-tabs .pay-tab');
+
+    tabs.forEach(t => t.classList.remove('active'));
+    event.currentTarget.classList.add('active');
+
+    if (type === 'card') {
+        cardPanel.style.display = 'block';
+        expressPanel.style.display = 'none';
+        ['cardName', 'cardNumber', 'cardExp', 'cardCvc'].forEach(id => {
+            document.getElementById(id).required = true;
+        });
+    } else {
+        cardPanel.style.display = 'none';
+        expressPanel.style.display = 'block';
+        ['cardName', 'cardNumber', 'cardExp', 'cardCvc'].forEach(id => {
+            document.getElementById(id).required = false;
+        });
+    }
+}
+
+// Booking modal total - uses the same pricing as the calculator
+function recalculateModalTotal() {
+    const totalOutput = document.getElementById('modalTotalOutput');
+    if (!totalOutput) return;
+    const stay = calculateStay(document.getElementById('modal-checkin')?.value, document.getElementById('modal-checkout')?.value);
+    if (!stay.valid) { totalOutput.textContent = '$0.00 USD'; return; }
+    totalOutput.textContent = `${money(withFee(stay.base, RATES.serviceFee).total)} USD`;
+}
+
+// Submission trigger ready for backend integration
+function handlePaymentSubmit(e) {
+    e.preventDefault();
+    const data = Object.fromEntries(new FormData(e.target).entries());
+    console.log("Secure Payment Payload Ready for Backend API:", data);
+    alert("Reservation request processed! Connecting to payment gateway backend...");
+    closePaymentModal();
 }
 
 // Rent Calculator Logic
 function calculateRentCost() {
     const propType = document.getElementById('rent-property-type')?.value || 'commercial';
-    const startDateInput = document.getElementById('rent-start');
-    const endDateInput = document.getElementById('rent-end');
-    
-    let nights = 1;
-    let baseRate = 0;
-    
-    // Parse start and end dates if provided
-    if (startDateInput?.value && endDateInput?.value) {
-        const start = new Date(startDateInput.value + 'T00:00:00');
-        const end = new Date(endDateInput.value + 'T00:00:00');
-        
-        // Calculate total calendar days
-        const diffTime = end - start;
-        const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
-        nights = diffDays > 0 ? diffDays : 1;
-
-        if (nights >= 30) {
-            // Monthly calculation logic ($800 per 30 days)
-            const months = Math.floor(nights / 30);
-            const remainingNights = nights % 30;
-            
-            // Calculate remaining nights with standard weekend logic
-            let remainingCost = 0;
-            let currentDate = new Date(start);
-            currentDate.setDate(currentDate.getDate() + (months * 30));
-            
-            for (let i = 0; i < remainingNights; i++) {
-                const dayOfWeek = currentDate.getDay(); // 5 = Friday, 6 = Saturday
-                remainingCost += (dayOfWeek === 5 || dayOfWeek === 6) ? 88 : 80;
-                currentDate.setDate(currentDate.getDate() + 1);
-            }
-
-            baseRate = (months * 800) + remainingCost;
-        } else {
-            // Nightly calculation with weekend adjustments
-            let currentDate = new Date(start);
-            for (let i = 0; i < nights; i++) {
-                const dayOfWeek = currentDate.getDay(); // 5 = Friday, 6 = Saturday
-                baseRate += (dayOfWeek === 5 || dayOfWeek === 6) ? 88 : 80;
-                currentDate.setDate(currentDate.getDate() + 1);
-            }
-        }
-    } else {
-        // Default single night base rate
-        baseRate = 80;
-    }
-
-    const config = RENT_CONFIG[propType] || RENT_CONFIG['commercial'];
-
-    // Calculate selected add-ons if present
-    let addonTotal = 0;
-    document.querySelectorAll('#form-rent input[name="addon"]:checked').forEach(checkbox => {
-        addonTotal += ADDON_PRICES[checkbox.value] || 0;
-    });
-
-    const subtotal = baseRate + addonTotal;
-    const taxes = subtotal * config.taxRate;
-    const totalCost = subtotal + taxes;
-
-    // Update DOM output
+    if (propType === 'commercial') { calculateCommercialLease(); return; }
+    const startInput = document.getElementById('rent-start');
+    const endInput = document.getElementById('rent-end');
     const totalDisplay = document.getElementById('total-amount-rent');
-    const breakdownContainer = document.getElementById('breakdown-rent');
+    const breakdown = document.getElementById('breakdown-rent');
+    const stay = calculateStay(startInput?.value, endInput?.value);
 
-    if (totalDisplay) {
-        totalDisplay.textContent = `$${Math.round(totalCost).toLocaleString()}`;
+    [startInput, endInput].forEach(el => el?.setAttribute('aria-invalid', String(!stay.valid)));
+    if (!stay.valid) {
+        if (totalDisplay) totalDisplay.textContent = '$0';
+        if (breakdown) breakdown.innerHTML = note(stay.reason === 'order' ? 'Check-out must be after check-in.' : 'Choose both a start date and an end date.');
+        return;
     }
 
-    if (breakdownContainer) {
-        breakdownContainer.innerHTML = `
-            <div class="breakdown-item"><span>Base Rate (${nights} night${nights > 1 ? 's' : ''}) =</span> <b>$${baseRate.toLocaleString()}</b></div>
-            <div class="breakdown-item"><span>Service Fees (15%) =</span> <b>$${Math.round(taxes).toLocaleString()}</b></div>
-        `;
+    let addonTotal = 0;
+    document.querySelectorAll('#form-rent input[name="addon"]:checked').forEach(box => { addonTotal += ADDON_PRICES[box.value] || 0; });
+
+    const feeRate = (RENT_CONFIG[propType] || RENT_CONFIG['commercial']).taxRate;
+    const { fee, total } = withFee(stay.base + addonTotal, feeRate);
+
+    if (totalDisplay) totalDisplay.textContent = money(total);
+    if (breakdown) {
+        breakdown.innerHTML =
+            row('Length of Stay', plural(stay.nights, 'night')) +
+            stay.lines.map(([label, amount]) => row(label, money(amount))).join('') +
+            (addonTotal ? row('Add-ons', money(addonTotal)) : '') +
+            row(`Service Fees (${Math.round(feeRate * 100)}%)`, money(fee));
+    }
+}
+
+function calculateCommercialLease() {
+    const startInput = document.getElementById('lease-start');
+    const termInput = document.getElementById('lease-duration');
+    const totalDisplay = document.getElementById('total-amount-rent');
+    const breakdown = document.getElementById('breakdown-rent');
+    const lease = calculateLease(startInput?.value, termInput?.value);
+
+    startInput?.setAttribute('aria-invalid', String(!lease.valid && lease.reason === 'lease-start'));
+    termInput?.setAttribute('aria-invalid', String(!lease.valid && lease.reason === 'lease-term'));
+    if (!lease.valid) {
+        if (totalDisplay) totalDisplay.textContent = '$0';
+        if (breakdown) breakdown.innerHTML = note(lease.reason === 'lease-start' ? 'Choose a lease start date.' : 'Choose a lease duration (3-5 years).');
+        return;
+    }
+    const { fee, total } = withFee(lease.base, RATES.serviceFee);
+    if (totalDisplay) totalDisplay.textContent = money(total);
+    if (breakdown) {
+        breakdown.innerHTML =
+            row('Lease Term', `${plural(lease.years, 'year')} (${lease.months} months)`) +
+            row('Lease Period', `${fmtDay(lease.startMs)} – ${fmtDay(lease.endMs)}`) +
+            row(`Lease Rate (${lease.months} × ${money(RATES.commercialMonthly)})`, money(lease.base)) +
+            row(`Service Fees (${Math.round(RATES.serviceFee * 100)}%)`, money(fee));
     }
 }
 
 // Investment ROI Calculator Logic
 function calculateInvestROI(isInvestPage = false) {
-    const capitalId = isInvestPage ? 'invest-capital-page' : 'invest-capital';
-    const strategyId = isInvestPage ? 'invest-strategy-page' : 'invest-strategy';
-    const targetId = isInvestPage ? 'invest-target-page' : 'invest-target';
-    const totalId = 'total-amount-invest'; // Standardized for both pages
-    const breakdownId = isInvestPage ? 'breakdown-invest-page' : 'breakdown-invest';
+    const sfx = isInvestPage ? '-page' : '';
+    const capital = parseFloat(document.getElementById('invest-capital' + sfx)?.value) || 0;
+    const strategy = document.getElementById('invest-strategy' + sfx)?.value || 'commercial';
+    const targetEl = document.getElementById('invest-target' + sfx);
+    const years = parseFloat(targetEl?.value);
+    const totalDisplay = document.getElementById('total-amount-invest');
+    const breakdown = document.getElementById(isInvestPage ? 'breakdown-invest-page' : 'breakdown-invest');
 
-    const capital = parseFloat(document.getElementById(capitalId)?.value) || 0;
-    const strategy = document.getElementById(strategyId)?.value || 'commercial';
-    const years = parseFloat(document.getElementById(targetId)?.value) || 1;
-
-    const yieldRate = INVEST_CONFIG[strategy] || 0.182;
-    const annualYield = capital * yieldRate;
-    const netProfit = annualYield * years;
-    const estimatedTotal = capital + netProfit;
-
-    // Update DOM output
-    const totalDisplay = document.getElementById(totalId);
-    const breakdownContainer = document.getElementById(breakdownId);
-
-    if (totalDisplay) {
-        totalDisplay.textContent = `$${Math.round(estimatedTotal).toLocaleString()}`;
+    if (!capital || !years) {
+        if (totalDisplay) totalDisplay.textContent = '$0';
+        if (breakdown) breakdown.innerHTML = note(!capital ? 'Move the slider to choose an investment amount.' : 'Choose a target holding period.');
+        return;
     }
 
-    if (breakdownContainer) {
-        breakdownContainer.innerHTML = `
-            <div class="breakdown-item"><span>Initial Capital =</span> <b>$${capital.toLocaleString()}</b></div>
-            <div class="breakdown-item"><span>Target Annual Yield (${(yieldRate * 100).toFixed(1)}%) =</span> <b>$${Math.round(annualYield).toLocaleString()}/yr</b></div>
-            <div class="breakdown-item"><span>Holding Duration =</span> <b>${years} Year${years > 1 ? 's' : ''}</b></div>
-            <div class="breakdown-item"><span>Estimated Net Profit =</span> <b>$${Math.round(netProfit).toLocaleString()}</b></div>
-            <a href="${isInvestPage ? '#form' : 'Invest.html#form'}" class="btn-prospectus">Request Full Prospectus</a>
-        `;
+    const yieldRate = INVEST_CONFIG[strategy] || INVEST_CONFIG['commercial'];
+    const annualYield = capital * yieldRate;
+    const netProfit = annualYield * years;
+
+    if (totalDisplay) totalDisplay.textContent = money(Math.round(capital + netProfit));
+    if (breakdown) {
+        breakdown.innerHTML =
+            row('Initial Capital', money(capital)) +
+            row(`Target Annual Yield (${(yieldRate * 100).toFixed(1)}%)`, `${money(Math.round(annualYield))}/yr`) +
+            row('Holding Duration', targetEl.options[targetEl.selectedIndex].text) +
+            row('Estimated Net Profit', money(Math.round(netProfit))) +
+            `<a href="${isInvestPage ? '#form' : 'Invest.html#form'}" class="btn-prospectus">${isInvestPage ? 'Request Full Prospectus' : 'Inquire About Investment'}</a>`;
     }
 }
 
-// Calculator wiring (forms submit with Enter or button; no inline handlers)
+// Calculator wiring
 document.addEventListener('DOMContentLoaded', () => {
+    // Rate dropdown labels come from RATES so they can never disagree with the calculator
+    const rateLabels = {
+        weeknight: `${money(RATES.weeknight)} USD / Week Night`,
+        weekend: `${money(RATES.weekend)} USD / Weekend Night`,
+        monthly: `${money(RATES.monthly)} USD / Month`
+    };
+    document.querySelectorAll('#price-rate-select option').forEach(o => { if (rateLabels[o.value]) o.textContent = rateLabels[o.value]; });
+
+    // Commercial = lease start date + 3-5 year term; Residential = start/end stay dates
+    const typeSelect = document.getElementById('rent-property-type');
+    const stayGroup = document.getElementById('rent-stay-group');
+    const leaseGroup = document.getElementById('rent-lease-group');
+    if (typeSelect && stayGroup && leaseGroup) {
+        const leaseStart = document.getElementById('lease-start');
+        if (leaseStart) { const n = new Date(); leaseStart.min = new Date(Date.UTC(n.getFullYear(), n.getMonth(), n.getDate())).toISOString().slice(0, 10); }
+        const syncType = () => {
+            const commercial = typeSelect.value === 'commercial';
+            leaseGroup.hidden = !commercial;
+            stayGroup.hidden = commercial;
+        };
+        typeSelect.addEventListener('change', syncType);
+        syncType();
+    }
+
+    // Calculate on click / Enter, then keep the result live as inputs change
     document.querySelectorAll('.calc-mode-form').forEach(form => {
-        form.addEventListener('submit', e => {
-            e.preventDefault();
+        const run = () => {
+            form.dataset.calculated = 'true';
             if (form.id === 'form-rent') calculateRentCost();
             else calculateInvestROI(document.body.classList.contains('invest-page'));
-        });
+        };
+        form.addEventListener('submit', e => { e.preventDefault(); run(); });
+        form.querySelectorAll('.btn-calculate[type="button"]').forEach(b => b.addEventListener('click', run));
+        const live = () => { if (form.dataset.calculated) run(); };
+        form.addEventListener('change', live);
+        form.addEventListener('input', live);
     });
+
+    // Date pickers: no past start dates, end date must be after the start date
+    const pairs = [['rent-start', 'rent-end'], ['modal-checkin', 'modal-checkout']];
+    const now = new Date();
+    const todayUtc = Date.UTC(now.getFullYear(), now.getMonth(), now.getDate());
+    const iso = ms => new Date(ms).toISOString().slice(0, 10);
+    pairs.forEach(([startId, endId]) => {
+        const start = document.getElementById(startId), end = document.getElementById(endId);
+        if (!start || !end) return;
+        start.min = iso(todayUtc);
+        const syncEnd = () => { end.min = iso((start.value ? parseDay(start.value) : todayUtc) + DAY_MS); };
+        start.addEventListener('change', () => { syncEnd(); if (end.value && end.value <= start.value) end.value = ''; recalculateModalTotal(); });
+        end.addEventListener('change', recalculateModalTotal);
+        syncEnd();
+    });
+
     document.querySelectorAll('input[type="range"][id^="invest-capital"]').forEach(s => s.addEventListener('input', e => updateCapitalValue(e.target.value)));
     document.querySelectorAll('[data-calc-mode]').forEach(btn => btn.addEventListener('click', () => {
         switchCalcMode(btn.dataset.calcMode);

@@ -32,7 +32,7 @@
                 <nav>
                     <div class="left-side">
                         <a href="index.html">
-                            <img src="images/placeholder logo.png" alt="Aumnia Group Inc. Logo" class="logo" height="35" width="60">
+                            <img src="images/white-logo.png" alt="Aumnia Group Inc. Logo" class="logo" height="35" width="60">
                         </a>
                         <h1>Aumnia Group Inc.</h1>
                     </div>
@@ -111,15 +111,16 @@
                     <div class="properties-content">
                         <p class="property-address">12 Wilson St, Andsville</p>
 
-                        <p class="property-description">
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque mattis euismod justo in 
-                            efficitur. Proin ac purus lectus. Morbi accumsan, libero a suscipit iaculis, lorem. Morbi condimentum 
-                            lacus vitae libero auctor, consectetur mattis dolor scelerisqu.
+                        <p class="property-description">Welcome to your ideal space for living or working. This contemporary, 
+                            professionally maintained property offers a seamless blend of style, warmth, and modern 
+                            functionality. Outfitted with neutral tones, clean lines, and high-quality amenities, the space is 
+                            meticulously designed to provide an exceptional experience for every guest, resident, or business 
+                            tenant.
                         </p>
 
                         <!-- Key Amenities List -->
                         <ul class="property-features">
-                            <li>Air-Conditiong</li>
+                            <li>Air-Conditioning</li>
                             <li>Smoke Alarm</li>
                             <li>Fire Extinguisher</li>
                             <li>1 Block from Coconut Beach</li>
@@ -129,15 +130,25 @@
                         <!-- Specs & Pricing Row -->
                         <div class="property-meta-row">
                             <div class="property-specs">
-                                <span><i class="fa-solid fa-user" aria-hidden="true"></i> 10</span>
-                                <span><i class="fa-solid fa-bed" aria-hidden="true"></i> 2</span>
+                                <span><i class="fa-solid fa-user" aria-hidden="true"></i> 2</span>
+                                <span><i class="fa-solid fa-bed" aria-hidden="true"></i> 1</span>
                                 <span><i class="fas fa-building" aria-hidden="true"></i> 1000sqft</span>
-                                <span><i class="fas fa-bath" aria-hidden="true"></i> 2</span>
+                                <span><i class="fas fa-bath" aria-hidden="true"></i> 1</span>
                             </div>
-                            <div class="property-price">
-                                <b>$80 USD</b>/ Week Night | <b>$88 USD</b>/ Weekend Night <br><b>$800 USD</b>/ Month
+                            <div class="property-price-dropdown-wrapper">
+                                <label for="price-rate-select" class="sr-only">Select Rate Type</label>
+                                <div class="calc-select-wrapper price-select-box">
+                                    <select id="price-rate-select" aria-label="Select pricing rate option">
+                                        <option value="weeknight" selected>$80 USD / Week Night</option>
+                                        <option value="weekend">$88 USD / Weekend Night</option>
+                                        <option value="monthly">$800 USD / Month</option>
+                                    </select>
+                                </div>
                             </div>
                         </div>
+
+                        <a href="#" class="book-btn" onclick="openPaymentModal()">Book Property</a>
+                        
                     </div>
                 </div>
              </section>
@@ -175,7 +186,7 @@
 
                             <!-- Stay Duration -->
                                 <!-- Group wrapper: named by the "Stay Duration:" heading below so screen readers announce it with each date field -->
-                                <div class="form-group" role="group" aria-labelledby="stay-label">
+                                <div class="form-group" id="rent-stay-group" role="group" aria-labelledby="stay-label">
                                     <!-- Visible group heading-->
                                     <span class="form-label" id="stay-label">Stay Duration:</span>
 
@@ -197,6 +208,28 @@
                                     </div>
                                 </div>
 
+                            <!-- Lease Details: replaces stay dates when Commercial is selected -->
+                            <div class="form-group" id="rent-lease-group" role="group" aria-labelledby="lease-label" hidden>
+                                <span class="form-label" id="lease-label">Lease Details:</span>
+                                <div class="date-inputs">
+                                    <div class="input-with-icon">
+                                        <label class="sub-label" for="lease-start">Lease start date</label>
+                                        <input type="date" id="lease-start" name="lease-start-date">
+                                    </div>
+                                    <div class="input-with-icon">
+                                        <label class="sub-label" for="lease-duration">Lease duration</label>
+                                        <div class="calc-select-wrapper">
+                                            <select id="lease-duration" name="lease-duration">
+                                                <option value="" disabled selected>Select term</option>
+                                                <option value="3">3 Years</option>
+                                                <option value="4">4 Years</option>
+                                                <option value="5">5 Years</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
                             <!-- Occupancy -->
                             <div class="form-group">
                                 <label for="rent-guests">Occupancy:</label>
@@ -205,8 +238,6 @@
                                         <option value="" disabled selected>Number of Guests:</option>
                                         <option value="1">1 Guest</option>
                                         <option value="2">2 Guests</option>
-                                        <option value="4">4 Guests</option>
-                                        <option value="10">10 Guests</option>
                                     </select>
                                 </div>
                             </div>
@@ -258,14 +289,14 @@
                     <!-- Right Side: Total Output Display Card -->
                      <div class="calc-receipt" role="region" aria-label="Calculation results" aria-live="polite">
                         <!-- Rent Total Heading (Visible by default) -->
-                        <h3 class="total-title" id="title-rent">Estimated Total = <span id="total-amount-rent">$274</span></h3>
+                        <h3 class="total-title" id="title-rent">Estimated Total = <span id="total-amount-rent">$0</span></h3>
                         
                         <!-- Invest Total Heading (Hidden by default) -->
                         <h3 class="total-title" id="title-invest" style="display: none;">Estimated Total = <span id="total-amount-invest">$0</span></h3>
                         
                         <!-- Rent Breakdown (Active) -->
                         <div id="breakdown-rent" class="breakdown-list active">
-                            <div class="breakdown-item"><span>Base Rate (1 night) =</span> <b>$80</b></div>
+                            <div class="breakdown-item"><span>Base Rate (per night) =</span> <b>$0</b></div>
                             <div class="breakdown-item"><span>Services Fees =</span> <b>15%</b></div>
                         </div>
 
@@ -276,7 +307,7 @@
                             <div class="breakdown-item"><span>Holding Duration =</span> <b>1 Year</b></div>
                             <div class="breakdown-item"><span>Estimated Net Profit =</span> <b>$850</b></div>
                             
-                            <a href="Invest.html#form" class="btn-prospectus">Request Full Prospectus</a>
+                            <a href="Invest.html#form" class="btn-prospectus">Inquire About Investment</a>
                         </div>
                      </div>
 
@@ -299,7 +330,7 @@
                     
                     <!-- Branding Block -->
                     <div class="footer-brand">
-                        <img src="images/placeholder logo.png" alt="Aumnia Group Inc. Logo" class="footer-logo">
+                        <img src="images/white-logo.png" alt="Aumnia Group Inc. Logo" class="footer-logo">
                         <div class="brand-text">
                             <h2 class="company-name">Aumnia Group Inc</h2>
                             <p class="company-address">Lizard Trail, Picard • Portsmouth, Dominica</p>
@@ -352,5 +383,142 @@
                     </div>
                 </div>
              </div>
+
+             <!-- Payment & Booking Modal -->
+            <div id="paymentModal" class="modal-overlay" aria-hidden="true" role="dialog" aria-labelledby="modalTitle">
+                <div class="modal-card modal-card-large">
+                    <button type="button" class="modal-close" onclick="closePaymentModal()" aria-label="Close modal">&times;</button>
+                    
+                    <div class="modal-header">
+                        <h2 id="modalTitle">Complete Your Reservation</h2>
+                        <p class="modal-subtitle">Loving Hills Suite • Lizard Trail, Picard, Dominica</p>
+                    </div>
+
+                    <form id="paymentForm" class="payment-form" onsubmit="handlePaymentSubmit(event)">
+                        
+                        <!-- Lease & Occupancy Details -->
+                        <fieldset class="form-section">
+                            <legend><i class="fa-solid fa-building-user"></i> Lease & Occupancy Details</legend>
+
+                            <!-- Lease Intent -->
+                            <div class="form-group">
+                                <label for="modal-lease-intent">Lease Intent / Usage Type <span class="required">*</span></label>
+                                <div class="calc-select-wrapper">
+                                    <select id="modal-lease-intent" name="leaseIntent" required onchange="toggleModalLeaseFields(this.value)">
+                                        <option value="residential" selected>Residential Short-Term Stay</option>
+                                        <option value="commercial">Commercial Multi-Year Lease</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <!-- Residential Stay Fields -->
+                            <div id="modalResidentialFields" class="form-row">
+                                <div class="form-group flex-1">
+                                    <label for="modal-checkin">Check-in Date <span class="required">*</span></label>
+                                    <input type="date" id="modal-checkin" name="checkInDate" required onchange="recalculateModalTotal()">
+                                </div>
+                                <div class="form-group flex-1">
+                                    <label for="modal-checkout">Check-out Date <span class="required">*</span></label>
+                                    <input type="date" id="modal-checkout" name="checkOutDate" required onchange="recalculateModalTotal()">
+                                </div>
+                            </div>
+
+                            <!-- Commercial Multi-Year Lease Fields -->
+                            <div id="modalCommercialFields" class="form-row" style="display: none;">
+                                <div class="form-group flex-1">
+                                    <label for="modal-comm-start">Lease Start Date <span class="required">*</span></label>
+                                    <input type="date" id="modal-comm-start" name="commStartDate">
+                                </div>
+                                <div class="form-group flex-1">
+                                    <label for="modal-comm-term">Lease Term Duration <span class="required">*</span></label>
+                                    <div class="calc-select-wrapper">
+                                        <select id="modal-comm-term" name="commTerm">
+                                            <option value="36">3 Years (36 Months)</option>
+                                            <option value="48">4 Years (48 Months)</option>
+                                            <option value="60">5 Years (60 Months)</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Occupants & Phone -->
+                            <div class="form-row">
+                                <div class="form-group flex-1">
+                                    <label for="modal-occupants">Number of Occupants <span class="required">*</span></label>
+                                    <div class="calc-select-wrapper">
+                                        <select id="modal-occupants" name="occupants" required>
+                                            <option value="1">1 Person</option>
+                                            <option value="2">2 Persons</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group flex-1">
+                                    <label for="modal-phone">Contact Phone <span class="required">*</span></label>
+                                    <input type="tel" id="modal-phone" name="contactPhone" placeholder="(767) 000-0000" required>
+                                </div>
+                            </div>
+                        </fieldset>
+
+                        <!-- Payment Method Section -->
+                        <fieldset class="form-section">
+                            <legend><i class="fa-solid fa-credit-card"></i> Payment Method</legend>
+
+                            <div class="payment-tabs">
+                                <label class="pay-tab active">
+                                    <input type="radio" name="paymentMethod" value="card" checked onclick="switchModalPaymentTab('card')">
+                                    <i class="fa-solid fa-credit-card"></i> Credit / Debit Card
+                                </label>
+                                <label class="pay-tab">
+                                    <input type="radio" name="paymentMethod" value="express" onclick="switchModalPaymentTab('express')">
+                                    <i class="fa-brands fa-apple"></i> Express Digital Wallet
+                                </label>
+                            </div>
+
+                            <!-- Card fields -->
+                            <div id="modalCardFields" class="payment-panel active">
+                                <div class="form-group">
+                                    <label for="cardName">Name on Card <span class="required">*</span></label>
+                                    <input type="text" id="cardName" name="cardName" placeholder="Full Name" required>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="cardNumber">Card Number <span class="required">*</span></label>
+                                    <input type="text" id="cardNumber" name="cardNumber" placeholder="4532 •••• •••• 8892" maxlength="19" required>
+                                </div>
+
+                                <div class="form-row">
+                                    <div class="form-group flex-1">
+                                        <label for="cardExp">Expiration (MM/YY) <span class="required">*</span></label>
+                                        <input type="text" id="cardExp" name="cardExp" placeholder="MM/YY" maxlength="5" required>
+                                    </div>
+                                    <div class="form-group flex-1">
+                                        <label for="cardCvc">CVC / CVV <span class="required">*</span></label>
+                                        <input type="password" id="cardCvc" name="cardCvc" placeholder="123" maxlength="4" required>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Checkout buttons -->
+                            <div id="modalExpressFields" class="payment-panel" style="display: none;">
+                                <p class="express-note" style="color: #bbb; font-size: 0.85rem; margin-bottom: 10px;">Select an instant checkout method:</p>
+                                <div class="express-btn-group" style="display: flex; gap: 10px;">
+                                    <button type="button" class="btn-express btn-apple-pay" style="flex:1; padding:10px; background:#fff; color:#000; border-radius:6px; font-weight:600; cursor:pointer;" onclick="alert('Redirecting to Apple Pay...')">Apple Pay</button>
+                                    <button type="button" class="btn-express btn-google-pay" style="flex:1; padding:10px; background:#4285f4; color:#fff; border-radius:6px; font-weight:600; cursor:pointer;" onclick="alert('Redirecting to Google Pay...')">Google Pay</button>
+                                    <button type="button" class="btn-express btn-paypal" style="flex:1; padding:10px; background:#ffc439; color:#000; border-radius:6px; font-weight:600; cursor:pointer;" onclick="alert('Redirecting to PayPal...')">PayPal</button>
+                                </div>
+                            </div>
+                        </fieldset>
+
+                        <!-- Summary -->
+                        <div class="modal-summary-footer" style="display: flex; justify-content: space-between; align-items: center; margin-top: 15px;">
+                            <div>
+                                <span style="font-size: 0.85rem; color: #aaa;">Estimated Total:</span>
+                                <span id="modalTotalOutput" style="display: block; font-size: 1.3rem; font-weight: 700; color: #00a896;">$0.00 USD</span>
+                            </div>
+                            <button type="submit" class="btn-submit-payment" style="background:#00a896; color:#fff; border:none; padding:12px 20px; border-radius:6px; font-weight:600; cursor:pointer;">Secure Checkout</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
         </body>
     </html>
